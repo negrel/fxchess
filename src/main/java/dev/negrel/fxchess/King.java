@@ -5,16 +5,20 @@ import org.jetbrains.annotations.NotNull;
 public class King {
 	public final Color color;
 	private final ChessBoard board;
-	private Coord position;
+	private Coord coord;
 
-	public King(@NotNull ChessBoard board, @NotNull Coord position, @NotNull Color color) {
+	public King(@NotNull ChessBoard board, @NotNull Coord coord, @NotNull Color color) {
 		this.board = board;
 		this.color = color;
-		this.position = position;
+		this.coord = coord;
+	}
+
+	public Coord getCoord() {
+		return coord;
 	}
 
 	public void move(Coord c) {
-		this.position = c;
+		this.coord = c;
 	}
 
 	public String toString() {
