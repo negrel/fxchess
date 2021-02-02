@@ -3,9 +3,9 @@ package dev.negrel.fxchess;
 import org.jetbrains.annotations.NotNull;
 
 public class King {
-	Coord position;
-	Color color;
-	ChessBoard board;
+	public final Color color;
+	private final ChessBoard board;
+	private Coord position;
 
 	public King(@NotNull ChessBoard board, @NotNull Coord position, @NotNull Color color) {
 		this.board = board;
