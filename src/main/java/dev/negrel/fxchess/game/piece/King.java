@@ -13,9 +13,9 @@ public class King extends Piece {
 	}
 
 	@Override
-	protected boolean isValidMove(Coord c) {
-		int diffX = Math.abs(c.getX() - coord.getX());
-		int diffY = Math.abs(c.getY() - coord.getY());
+	protected boolean isValidMove(Coord destination) {
+		int diffX = Math.abs(destination.getX() - coord.getX());
+		int diffY = Math.abs(destination.getY() - coord.getY());
 
 		if (diffX == 0 && diffY == 0)
 			return false;

@@ -13,9 +13,9 @@ public class Knight extends Piece {
 	}
 
 	@Override
-	protected boolean isValidMove(Coord c) {
-		int diffX = Math.abs(c.getX() - coord.getX());
-		int diffY = Math.abs(c.getY() - coord.getY());
+	protected boolean isValidMove(Coord destination) {
+		int diffX = Math.abs(destination.getX() - coord.getX());
+		int diffY = Math.abs(destination.getY() - coord.getY());
 
 		return (diffX == 2 && diffY == 1) || (diffY == 2 && diffX == 1);
 	}

@@ -13,9 +13,9 @@ public class Pawn extends Piece {
 	}
 
 	@Override
-	protected boolean isValidMove(Coord c) {
-		int diffX = c.getX() - coord.getX();
-		int diffY = c.getY() - coord.getY();
+	protected boolean isValidMove(Coord destination) {
+		int diffX = destination.getX() - coord.getX();
+		int diffY = destination.getY() - coord.getY();
 
 		int y = (color == Color.BLACK ? 1 : -1);
 		return diffX == 0 && diffY == y;
