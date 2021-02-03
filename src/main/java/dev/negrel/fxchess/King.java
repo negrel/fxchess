@@ -2,26 +2,21 @@ package dev.negrel.fxchess;
 
 import org.jetbrains.annotations.NotNull;
 
-public class King {
-	public final Color color;
-	private final ChessBoard board;
-	private Coord coord;
-
-	public King(@NotNull ChessBoard board, @NotNull Coord coord, @NotNull Color color) {
-		this.board = board;
-		this.color = color;
-		this.coord = coord;
+public class King extends Piece {
+	public King(@NotNull ChessBoard board, @NotNull Coord coord, @NotNull Color color) throws IllegalPositionException {
+		super(board, coord, color);
 	}
 
-	public Coord getCoord() {
-		return coord;
-	}
+	@Override
+	protected boolean isValidMove(Coord c) {
+		int diffX = Math.abs(c.getX() - coord.getX());
+		int diffY = Math.abs(c.getY() - coord.getY());
 
-	public void move(Coord c) {
-		this.coord = c;
-	}
+		if (diffX == 0 && diffY == 0)
+			return false;
 
-	public String toString() {
-		return "\uD83E\uDD34";
+		return diffX <= 1 && diffY <= 1;
 	}
 }
+
+
