@@ -1,4 +1,4 @@
-package dev.negrel.fxchess;
+package dev.negrel.fxchess.game;
 
 public enum Color {
 	BLACK, WHITE;

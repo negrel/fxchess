@@ -1,4 +1,4 @@
-package dev.negrel.fxchess;
+package dev.negrel.fxchess.game;
 
 public class Coord {
 	private final int x;

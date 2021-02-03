@@ -1,10 +1,13 @@
-package dev.negrel.fxchess;
+package dev.negrel.fxchess.game.piece;
 
+import dev.negrel.fxchess.game.ChessBoard;
+import dev.negrel.fxchess.game.Color;
+import dev.negrel.fxchess.game.Coord;
+import dev.negrel.fxchess.game.board_exception.IllegalPositionException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
 
 public class KnightTest {
 	Knight knight;

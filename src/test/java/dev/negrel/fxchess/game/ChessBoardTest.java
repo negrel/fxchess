@@ -1,5 +1,6 @@
-package dev.negrel.fxchess;
+package dev.negrel.fxchess.game;
 
+import dev.negrel.fxchess.game.board_exception.IllegalPositionException;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
