@@ -49,7 +49,7 @@ public class PieceTest {
 		}
 
 		@Override
-		protected boolean isValidMove(Coord c) {
+		protected boolean isValidMove(Coord destination) {
 			return validMove;
 		}
 	}
