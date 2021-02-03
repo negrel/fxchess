@@ -5,9 +5,16 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Vector;
 
+/**
+ * ChessBoard define a chessboard that contains Piece object.
+ * This object is responsible from holding the chess piece.
+ */
 public class ChessBoard {
-	int[][] cases;
+	private final int[][] cases;
 
+	/**
+	 * Instantiate a new ChessBoard.
+	 */
 	public ChessBoard() {
 		cases = new int[8][8];
 	}
@@ -30,19 +37,38 @@ public class ChessBoard {
 		cases[coord.getY()][coord.getX()] = n;
 	}
 
+	/**
+	 * Check that the case at the given coordinate is not occupied.
+	 * @param coord The coordinate of the case to check.
+	 * @return true if the case is free or false otherwise.
+	 * @throws IllegalPositionException if the given coordinate is out of the chessboard.
+	 */
 	public boolean isOccupied(Coord coord) throws IllegalPositionException {
 		return getCase(coord) == 1;
 	}
 
+	/**
+	 * Set the occupation of the case at the given coordinate.
+	 * @param coord The coordinate of the case to update.
+	 * @param in Whether or not the case is occupied.
+	 * @throws IllegalPositionException if the given coordinate is out of the chessboard.
+	 */
 	public void setOccupation(Coord coord, boolean in) throws IllegalPositionException {
 		int n = in ? 1 : 0;
 		setCase(coord, n);
 	}
 
+	/**
+	 * Print the chessboard to the standard output.
+	 */
 	public void smartPrint() {
 		System.out.println(this.toString());
 	}
 
+	/**
+	 * Convert the chessboard to a String.
+	 * @return the String representation of this.
+	 */
 	public String toString() {
 		LineBuilder builder = new LineBuilder(8);
 
