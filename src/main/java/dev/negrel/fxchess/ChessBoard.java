@@ -11,22 +11,30 @@ public class ChessBoard {
 		cases = new int[8][8];
 	}
 
-	private int getCase(@NotNull Coord coord) {
+	private void checkCoord(@NotNull Coord coord) throws IllegalPositionException {
+		if (coord.getX() < 0 || coord.getX() >= 8 ||
+			coord.getY() < 0 || coord.getY() >= 8)
+			throw new IllegalPositionException(coord);
+
+	}
+
+	private int getCase(@NotNull Coord coord) throws IllegalPositionException {
+		checkCoord(coord);
 		return cases[coord.getY()][coord.getX()];
 	}
 
-	private void setCase(@NotNull Coord coord, int n) {
+	private void setCase(@NotNull Coord coord, int n) throws IllegalPositionException {
+		checkCoord(coord);
+
 		cases[coord.getY()][coord.getX()] = n;
 	}
 
-	public boolean isOccupied(Coord coord) {
+	public boolean isOccupied(Coord coord) throws IllegalPositionException {
 		return getCase(coord) == 1;
 	}
 
-	public void setOccupation(Coord coord, boolean in) {
-		int n = 0;
-		if (in) n = 1;
-
+	public void setOccupation(Coord coord, boolean in) throws IllegalPositionException {
+		int n = in ? 1 : 0;
 		setCase(coord, n);
 	}
 
