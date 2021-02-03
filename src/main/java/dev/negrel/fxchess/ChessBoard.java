@@ -41,7 +41,7 @@ public class ChessBoard {
 			int[] row = cases[i];
 
 			for (int c : row) {
-				builder.appendString(i, String.valueOf(c).concat(" | "));
+				builder.appendString(7 - i, String.valueOf(c).concat(" | "));
 			}
 		}
 
@@ -54,7 +54,7 @@ public class ChessBoard {
 		return builder.toString();
 	}
 
-	private class LineBuilder extends Vector<StringBuffer> {
+	private static class LineBuilder extends Vector<StringBuffer> {
 		public LineBuilder(int lineCount) {
 			super(lineCount);
 
