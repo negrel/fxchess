@@ -1,5 +1,15 @@
 package dev.negrel.fxchess.game;
 
+/**
+ * Color define the color of a chess Piece.
+ */
 public enum Color {
-	BLACK, WHITE;
+	/**
+	 * Black color.
+	 */
+	BLACK,
+	/**
+	 * White color.
+	 */
+	WHITE;
 }
