@@ -7,6 +7,10 @@ import dev.negrel.fxchess.game.Piece;
 import dev.negrel.fxchess.game.board_exception.IllegalPositionException;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * King define the king chess piece.
+ * @see <a href="https://www.chess.com/terms/chess-pieces#king">https://www.chess.com/terms/chess-pieces#king</a>
+ */
 public class King extends Piece {
 	public King(@NotNull ChessBoard board, @NotNull Coord coord, @NotNull Color color) throws IllegalPositionException {
 		super(board, coord, color);

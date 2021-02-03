@@ -7,6 +7,10 @@ import dev.negrel.fxchess.game.Piece;
 import dev.negrel.fxchess.game.board_exception.IllegalPositionException;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Pawn define the pawn chess piece.
+ * @see <a href="https://www.chess.com/terms/chess-pieces#pawn">https://www.chess.com/terms/chess-pieces#pawn</a>
+ */
 public class Pawn extends Piece {
 	public Pawn(@NotNull ChessBoard board, @NotNull Coord coord, @NotNull Color color) throws IllegalPositionException {
 		super(board, coord, color);
