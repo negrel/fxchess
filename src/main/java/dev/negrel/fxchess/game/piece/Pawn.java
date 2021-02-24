@@ -8,7 +8,7 @@ import dev.negrel.fxchess.game.board_exception.IllegalPositionException;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Pawn define the pawn chess piece.
+ * Pawn defines the pawn chess piece.
  * @see <a href="https://www.chess.com/terms/chess-pieces#pawn">https://www.chess.com/terms/chess-pieces#pawn</a>
  */
 public class Pawn extends Piece {

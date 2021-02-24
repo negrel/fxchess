@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
  * All the pieces defined in the piece package inherit from
  * this class.
  */
-public abstract class Piece {
+public abstract class Piece implements Movable {
 	/**
 	 * The color of this piece (white or black).
 	 */
@@ -35,7 +35,7 @@ public abstract class Piece {
 		this.color = color;
 		this.coord = coord;
 
-		this.board.setOccupation(coord, true);
+		this.board.setOccupation(coord, this);
 	}
 
 	/**
@@ -65,8 +65,8 @@ public abstract class Piece {
 			throw new IllegalMoveException(this, destination);
 		}
 
-		board.setOccupation(coord, false);
-		board.setOccupation(destination, true);
+		board.setOccupation(coord, null);
+		board.setOccupation(destination, this);
 		coord = destination;
 	}
 }

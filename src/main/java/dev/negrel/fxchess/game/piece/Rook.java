@@ -8,7 +8,7 @@ import dev.negrel.fxchess.game.board_exception.IllegalPositionException;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Rook define the Rook chess piece.
+ * Rook defines the Rook chess piece.
  * @see <a href="https://www.chess.com/terms/chess-pieces#rook">https://www.chess.com/terms/chess-pieces#rook</a>
  */
 public class Rook extends Piece {

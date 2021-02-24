@@ -8,7 +8,7 @@ import dev.negrel.fxchess.game.board_exception.IllegalPositionException;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * King define the king chess piece.
+ * King defines the king chess piece.
  * @see <a href="https://www.chess.com/terms/chess-pieces#king">https://www.chess.com/terms/chess-pieces#king</a>
  */
 public class King extends Piece {

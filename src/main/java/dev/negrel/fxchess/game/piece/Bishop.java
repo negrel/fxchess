@@ -8,7 +8,7 @@ import dev.negrel.fxchess.game.board_exception.IllegalPositionException;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Bishop define the bishop chess piece.
+ * Bishop defines the bishop chess piece.
  * @see <a href="https://www.chess.com/terms/chess-pieces#bishop">https://www.chess.com/terms/chess-pieces#bishop</a>
  */
 public class Bishop extends Piece {

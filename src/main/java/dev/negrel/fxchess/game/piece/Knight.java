@@ -8,7 +8,7 @@ import dev.negrel.fxchess.game.board_exception.IllegalPositionException;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Knight define the knight chess piece.
+ * Knight defines the knight chess piece.
  * @see <a href="https://www.chess.com/terms/chess-pieces#knight">https://www.chess.com/terms/chess-pieces#knight</a>
  */
 public class Knight extends Piece {

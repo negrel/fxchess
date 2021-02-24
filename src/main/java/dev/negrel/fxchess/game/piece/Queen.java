@@ -8,7 +8,7 @@ import dev.negrel.fxchess.game.board_exception.IllegalPositionException;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Queen define the queen chess piece.
+ * Queen defines the queen chess piece.
  * @see <a href="https://www.chess.com/terms/chess-pieces#queen">https://www.chess.com/terms/chess-pieces#queen</a>
  */
 public class Queen extends Piece {
