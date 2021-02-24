@@ -16,6 +16,9 @@ public class PawnTest {
 		Pawn pawn = new Pawn(ChessBoard.getInstance(), new Coord(), Color.BLACK);
 
 		assertTrue(pawn.isValidMove(new Coord(0, 1)));
+		assertTrue(pawn.isValidMove(new Coord(-1, 1)));
+		assertTrue(pawn.isValidMove(new Coord(1, 1)));
+
 		assertFalse(pawn.isValidMove(new Coord(0, -1)));
 	}
 
@@ -24,6 +27,9 @@ public class PawnTest {
 		Pawn pawn = new Pawn(ChessBoard.getInstance(), new Coord(), Color.WHITE);
 
 		assertTrue(pawn.isValidMove(new Coord(0, -1)));
+		assertTrue(pawn.isValidMove(new Coord(-1, -1)));
+		assertTrue(pawn.isValidMove(new Coord(1, -1)));
+
 		assertFalse(pawn.isValidMove(new Coord(0, 1)));
 	}
 
@@ -31,10 +37,9 @@ public class PawnTest {
 	void isValidMoveInvalidMove() throws IllegalPositionException {
 		Pawn pawn = new Pawn(ChessBoard.getInstance(), new Coord(), Color.WHITE);
 
-		assertFalse(pawn.isValidMove(new Coord(1, 1)));
 		assertFalse(pawn.isValidMove(new Coord(1, 5)));
-		assertFalse(pawn.isValidMove(new Coord(-1, -1)));
-		assertFalse(pawn.isValidMove(new Coord(-1, 5)));
+		assertFalse(pawn.isValidMove(new Coord(1, 0)));
+		assertFalse(pawn.isValidMove(new Coord(-1, 0)));
 		assertFalse(pawn.isValidMove(new Coord(0, 0)));
 	}
 }

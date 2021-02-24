@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * King defines the king chess piece.
+ *
  * @see <a href="https://www.chess.com/terms/chess-pieces#king">https://www.chess.com/terms/chess-pieces#king</a>
  */
 public class King extends Piece {

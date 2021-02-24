@@ -3,6 +3,8 @@ package dev.negrel.fxchess.game;
 import dev.negrel.fxchess.game.board_exception.IllegalPositionException;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Vector;
 
 /**
@@ -33,6 +35,32 @@ public class ChessBoard {
 		return ChessBoard.singleton;
 	}
 
+	public Iterator<Case> getIterator(@NotNull Coord from, @NotNull Coord to) {
+		int diffX = Math.abs(to.getX() - from.getX());
+		int diffY = Math.abs(to.getY() - from.getY());
+
+		if (diffX == 0 && diffY == 0)
+			return null;
+
+		// Only diagonal, horizontal and vertical line are allowed
+		if (!(diffX == diffY || (diffX > 0 && diffY == 0) || (diffY > 0 && diffX == 0)))
+			return null;
+
+		// Collect the Movable.
+		ArrayList<Case> l = new ArrayList<Case>();
+		for (int i = from.getX(); i < to.getX(); i++) {
+			for (int j = from.getY(); j < to.getY(); j++) {
+				try {
+					Case c = getCase(new Coord(i, j));
+					l.add(c);
+				} catch (IllegalPositionException ignored) {
+				}
+			}
+		}
+
+		return l.iterator();
+	}
+
 	private void checkCoord(@NotNull Coord coord) throws IllegalPositionException {
 		if (coord.getX() < 0 || coord.getX() >= 8 ||
 			coord.getY() < 0 || coord.getY() >= 8)
@@ -45,7 +73,7 @@ public class ChessBoard {
 		return cases[coord.getY()][coord.getX()];
 	}
 
-	private Movable getMovable(@NotNull Coord coord) throws IllegalPositionException {
+	public Movable getMovable(@NotNull Coord coord) throws IllegalPositionException {
 		return getCase(coord).getMovable();
 	}
 

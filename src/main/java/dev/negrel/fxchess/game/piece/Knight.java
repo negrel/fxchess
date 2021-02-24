@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * Knight defines the knight chess piece.
+ *
  * @see <a href="https://www.chess.com/terms/chess-pieces#knight">https://www.chess.com/terms/chess-pieces#knight</a>
  */
 public class Knight extends Piece {
@@ -22,6 +23,11 @@ public class Knight extends Piece {
 		int diffY = Math.abs(destination.getY() - coord.getY());
 
 		return (diffX == 2 && diffY == 1) || (diffY == 2 && diffX == 1);
+	}
+
+	// The knight piece jump above piece therefore, it's path is always valid.
+	protected boolean isValidPath(Coord destination) {
+		return true;
 	}
 }
 

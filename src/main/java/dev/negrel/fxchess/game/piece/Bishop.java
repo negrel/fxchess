@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * Bishop defines the bishop chess piece.
+ *
  * @see <a href="https://www.chess.com/terms/chess-pieces#bishop">https://www.chess.com/terms/chess-pieces#bishop</a>
  */
 public class Bishop extends Piece {
@@ -21,7 +22,7 @@ public class Bishop extends Piece {
 		int diffX = Math.abs(destination.getX() - coord.getX());
 		int diffY = Math.abs(destination.getY() - coord.getY());
 
-		return (diffX == 0 && diffY > 0) || (diffY == 0 && diffX > 0);
+		return (diffX == diffY && diffY > 0);
 	}
 }
 

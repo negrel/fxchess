@@ -19,14 +19,14 @@ public class BishopTest {
 
 	@Test
 	void isValidMove() {
-		assertTrue(bishop.isValidMove(new Coord(5, 0)));
-		assertTrue(bishop.isValidMove(new Coord(-5, 0)));
-		assertTrue(bishop.isValidMove(new Coord(0, 5)));
-		assertTrue(bishop.isValidMove(new Coord(0, -5)));
+		assertTrue(bishop.isValidMove(new Coord(5, 5)));
+		assertTrue(bishop.isValidMove(new Coord(-5, 5)));
+		assertTrue(bishop.isValidMove(new Coord(5, -5)));
+		assertTrue(bishop.isValidMove(new Coord(-5, -5)));
 
-		assertFalse(bishop.isValidMove(new Coord(1, 1)));
+		assertFalse(bishop.isValidMove(new Coord(1, 0)));
 		assertFalse(bishop.isValidMove(new Coord(1, 5)));
-		assertFalse(bishop.isValidMove(new Coord(-1, -1)));
+		assertFalse(bishop.isValidMove(new Coord(0, 1)));
 		assertFalse(bishop.isValidMove(new Coord(-1, 5)));
 		assertFalse(bishop.isValidMove(new Coord(0, 0)));
 	}

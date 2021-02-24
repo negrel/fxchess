@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * Pawn defines the pawn chess piece.
+ *
  * @see <a href="https://www.chess.com/terms/chess-pieces#pawn">https://www.chess.com/terms/chess-pieces#pawn</a>
  */
 public class Pawn extends Piece {
@@ -22,6 +23,10 @@ public class Pawn extends Piece {
 		int diffY = destination.getY() - coord.getY();
 
 		int y = (color == Color.BLACK ? 1 : -1);
+
+		if (Math.abs(diffX) == 1 && diffY == y)
+			return true;
+
 		return diffX == 0 && diffY == y;
 	}
 }
