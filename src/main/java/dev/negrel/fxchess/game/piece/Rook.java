@@ -24,6 +24,10 @@ public class Rook extends Piece {
 
 		return (diffX > 0 && diffY == 0) || (diffY > 0 && diffX == 0);
 	}
+
+	public String toString() {
+		return "R";
+	}
 }
 
 

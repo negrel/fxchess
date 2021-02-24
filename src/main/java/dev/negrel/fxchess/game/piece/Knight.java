@@ -29,6 +29,10 @@ public class Knight extends Piece {
 	protected boolean isValidPath(Coord destination) {
 		return true;
 	}
+
+	public String toString() {
+		return "k";
+	}
 }
 
 

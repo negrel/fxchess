@@ -29,6 +29,10 @@ public class Pawn extends Piece {
 
 		return diffX == 0 && diffY == y;
 	}
+
+	public String toString() {
+		return "P";
+	}
 }
 
 
