@@ -1,5 +1,6 @@
 package dev.negrel.fxchess.game;
 
+import dev.negrel.fxchess.game.board_exception.IllegalMoveException;
 import dev.negrel.fxchess.game.board_exception.IllegalPositionException;
 import org.jetbrains.annotations.NotNull;
 
@@ -15,11 +16,14 @@ public class ChessBoard {
 	private static final ChessBoard singleton = new ChessBoard();
 
 	private final Case[][] cases;
+	private final ArrayList<Move> moves;
 
 	/**
 	 * Instantiates a new ChessBoard.
 	 */
 	private ChessBoard() {
+		moves = new ArrayList<Move>();
+
 		cases = new Case[8][8];
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
@@ -33,6 +37,18 @@ public class ChessBoard {
 	 */
 	public static ChessBoard getInstance() {
 		return ChessBoard.singleton;
+	}
+
+	/**
+	 * Plays the given chess Move.
+	 *
+	 * @param m The chess move.
+	 * @throws IllegalPositionException if the move destination coordinates is out of board.
+	 * @throws IllegalMoveException     if the piece to move can't do this move.
+	 */
+	public void play(Move m) throws IllegalPositionException, IllegalMoveException {
+		m.playOn(this);
+		moves.add(m);
 	}
 
 	public Iterator<Case> getIterator(@NotNull Coord from, @NotNull Coord to) {

@@ -15,6 +15,7 @@ public class Coord {
 
 	/**
 	 * Instantiate a new Coord object.
+	 *
 	 * @param x The coordinate on the X axis.
 	 * @param y The coordinate on the Y axis.
 	 */
@@ -25,6 +26,15 @@ public class Coord {
 
 	public Coord() {
 		this(0, 0);
+	}
+
+	/**
+	 * @param rawX the X coordinates
+	 * @param rawY the Y coordinates
+	 * @return a Coord object based on the given inputs.
+	 */
+	public static Coord fromString(String rawX, String rawY) {
+		return new Coord(Integer.parseInt(rawX), Integer.parseInt(rawY));
 	}
 
 	/**
