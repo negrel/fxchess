@@ -14,7 +14,7 @@ class ChessBoardTest {
 	ChessBoard board;
 
 	public ChessBoardTest() {
-		board = new ChessBoard();
+		board = ChessBoard.getInstance();
 	}
 
 	@Test

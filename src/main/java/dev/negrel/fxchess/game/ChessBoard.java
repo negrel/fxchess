@@ -10,18 +10,27 @@ import java.util.Vector;
  * This object is responsible from holding the chess piece.
  */
 public class ChessBoard {
+	private static final ChessBoard singleton = new ChessBoard();
+
 	private final Case[][] cases;
 
 	/**
 	 * Instantiates a new ChessBoard.
 	 */
-	public ChessBoard() {
+	private ChessBoard() {
 		cases = new Case[8][8];
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
 				cases[i][j] = new Case();
 			}
 		}
+	}
+
+	/**
+	 * @return The ChessBoard singleton.
+	 */
+	public static ChessBoard getInstance() {
+		return ChessBoard.singleton;
 	}
 
 	private void checkCoord(@NotNull Coord coord) throws IllegalPositionException {

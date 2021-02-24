@@ -13,7 +13,7 @@ public class KnightTest {
 	Knight knight;
 
 	public KnightTest() throws IllegalPositionException {
-		knight = new Knight(new ChessBoard(), new Coord(), Color.BLACK);
+		knight = new Knight(ChessBoard.getInstance(), new Coord(), Color.BLACK);
 	}
 
 	@Test

@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class TP1Test {
 	@Test
 	void ex1() throws IllegalPositionException, IllegalMoveException {
-		ChessBoard board = new ChessBoard();
+		ChessBoard board = ChessBoard.getInstance();
 		board.smartPrint();
 
 		King king = new King(board, new Coord(2, 3), Color.BLACK);
@@ -24,7 +24,7 @@ public class TP1Test {
 
 	@Test
 	void ex2() throws IllegalPositionException {
-		ChessBoard board = new ChessBoard();
+		ChessBoard board = ChessBoard.getInstance();
 
 		King king = new King(board, new Coord(0, 0), Color.BLACK);
 
@@ -33,7 +33,7 @@ public class TP1Test {
 
 	@Test
 	void ex3() throws IllegalPositionException {
-		ChessBoard board = new ChessBoard();
+		ChessBoard board = ChessBoard.getInstance();
 
 		Queen queen = new Queen(board, new Coord(0, 0), Color.BLACK);
 
