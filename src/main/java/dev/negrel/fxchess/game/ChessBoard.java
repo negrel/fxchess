@@ -6,17 +6,22 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Vector;
 
 /**
- * ChessBoard define a chessboard that contains Piece object.
+ * ChessBoard defines a chessboard that contains Piece object.
  * This object is responsible from holding the chess piece.
  */
 public class ChessBoard {
-	private final int[][] cases;
+	private final Case[][] cases;
 
 	/**
-	 * Instantiate a new ChessBoard.
+	 * Instantiates a new ChessBoard.
 	 */
 	public ChessBoard() {
-		cases = new int[8][8];
+		cases = new Case[8][8];
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				cases[i][j] = new Case();
+			}
+		}
 	}
 
 	private void checkCoord(@NotNull Coord coord) throws IllegalPositionException {
@@ -26,57 +31,63 @@ public class ChessBoard {
 
 	}
 
-	private int getCase(@NotNull Coord coord) throws IllegalPositionException {
+	private Case getCase(@NotNull Coord coord) throws IllegalPositionException {
 		checkCoord(coord);
 		return cases[coord.getY()][coord.getX()];
 	}
 
-	private void setCase(@NotNull Coord coord, int n) throws IllegalPositionException {
-		checkCoord(coord);
+	private Movable getMovable(@NotNull Coord coord) throws IllegalPositionException {
+		return getCase(coord).getMovable();
+	}
 
-		cases[coord.getY()][coord.getX()] = n;
+	private void setMovable(@NotNull Coord coord, Movable m) throws IllegalPositionException {
+		getCase(coord).setMovable(m);
 	}
 
 	/**
-	 * Check that the case at the given coordinate is not occupied.
+	 * Checks that the case at the given coordinate is not occupied.
+	 *
 	 * @param coord The coordinate of the case to check.
 	 * @return true if the case is free or false otherwise.
 	 * @throws IllegalPositionException if the given coordinate is out of the chessboard.
 	 */
 	public boolean isOccupied(Coord coord) throws IllegalPositionException {
-		return getCase(coord) == 1;
+		return getCase(coord).isOccupied();
 	}
 
 	/**
-	 * Set the occupation of the case at the given coordinate.
-	 * @param coord The coordinate of the case to update.
-	 * @param in Whether or not the case is occupied.
+	 * Sets the occupation of the case at the given coordinate.
+	 *
+	 * @param coord The coordinate of the Case to update.
+	 * @param m     The Movable to place on the Case.
 	 * @throws IllegalPositionException if the given coordinate is out of the chessboard.
 	 */
-	public void setOccupation(Coord coord, boolean in) throws IllegalPositionException {
-		int n = in ? 1 : 0;
-		setCase(coord, n);
+	public void setOccupation(Coord coord, Movable m) throws IllegalPositionException {
+		setMovable(coord, m);
 	}
 
 	/**
-	 * Print the chessboard to the standard output.
+	 * Prints the chessboard to the standard output.
 	 */
 	public void smartPrint() {
 		System.out.println(this.toString());
 	}
 
 	/**
-	 * Convert the chessboard to a String.
+	 * Converts the chessboard to a String.
+	 *
 	 * @return the String representation of this.
 	 */
 	public String toString() {
 		LineBuilder builder = new LineBuilder(8);
 
 		for (int i = 0; i < cases.length; i++) {
-			int[] row = cases[i];
+			Case[] row = cases[i];
 
-			for (int c : row) {
-				builder.appendString(7 - i, String.valueOf(c).concat(" | "));
+			for (Case c : row) {
+				Movable m = c.getMovable();
+				String p = m != null ? m.toString() : " ";
+				builder.appendString(7 - i, p.concat(" | "));
 			}
 		}
 

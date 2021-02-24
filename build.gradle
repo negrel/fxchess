@@ -4,30 +4,26 @@
 
 plugins {
     id 'java'
-    id 'maven-publish'
 }
 
 repositories {
-    mavenLocal()
-    maven {
-        url = uri('https://repo.maven.apache.org/maven2/')
-    }
+    jcenter()
+    mavenCentral()
 }
 
 dependencies {
     implementation 'org.jetbrains:annotations:20.1.0'
-    testImplementation 'org.junit.jupiter:junit-jupiter:RELEASE'
+    implementation 'junit:junit:4.12'
+    implementation 'org.junit.jupiter:junit-jupiter:5.4.2'
+    testImplementation('org.junit.jupiter:junit-jupiter')
+    testImplementation "org.mockito:mockito-core:2.+"
 }
 
 group = 'groupId'
 version = '1.0-SNAPSHOT'
 description = 'fxchess'
-java.sourceCompatibility = JavaVersion.VERSION_1_8
+java.sourceCompatibility = JavaVersion.VERSION_15
 
-publishing {
-    publications {
-        maven(MavenPublication) {
-            from(components.java)
-        }
-    }
+test {
+    useJUnitPlatform()
 }

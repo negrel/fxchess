@@ -7,6 +7,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class ChessBoardTest {
 	ChessBoard board;
@@ -17,10 +19,12 @@ class ChessBoardTest {
 
 	@Test
 	void occupation() throws IllegalPositionException {
+		Movable m = mock(Piece.class);
+
 		assertFalse(board.isOccupied(new Coord()));
-		board.setOccupation(new Coord(), true);
+		board.setOccupation(new Coord(), m);
 		assertTrue(board.isOccupied(new Coord()));
-		board.setOccupation(new Coord(), false);
+		board.setOccupation(new Coord(), null);
 		assertFalse(board.isOccupied(new Coord()));
 	}
 
@@ -29,13 +33,15 @@ class ChessBoardTest {
 	 */
 	@Test
 	void occupationThrowIllegalPositionException() {
-		assertThrows(IllegalPositionException.class, () -> board.setOccupation(new Coord(1000, 1000), true));
-		assertThrows(IllegalPositionException.class, () -> board.setOccupation(new Coord(5, 1000), true));
-		assertThrows(IllegalPositionException.class, () -> board.setOccupation(new Coord(1000, 5), true));
+		Movable m = mock(Piece.class);
 
-		assertThrows(IllegalPositionException.class, () -> board.setOccupation(new Coord(-1, -1), true));
-		assertThrows(IllegalPositionException.class, () -> board.setOccupation(new Coord(-1, 5), true));
-		assertThrows(IllegalPositionException.class, () -> board.setOccupation(new Coord(5, -1), true));
+		assertThrows(IllegalPositionException.class, () -> board.setOccupation(new Coord(1000, 1000), m));
+		assertThrows(IllegalPositionException.class, () -> board.setOccupation(new Coord(5, 1000), m));
+		assertThrows(IllegalPositionException.class, () -> board.setOccupation(new Coord(1000, 5), m));
+
+		assertThrows(IllegalPositionException.class, () -> board.setOccupation(new Coord(-1, -1), m));
+		assertThrows(IllegalPositionException.class, () -> board.setOccupation(new Coord(-1, 5), m));
+		assertThrows(IllegalPositionException.class, () -> board.setOccupation(new Coord(5, -1), m));
 
 
 		assertThrows(IllegalPositionException.class, () -> board.isOccupied(new Coord(1000, 1000)));
@@ -55,14 +61,14 @@ class ChessBoardTest {
 		board.smartPrint();
 
 		String expectedOutput = """
-			8 │ 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |\s
-			7 │ 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |\s
-			6 │ 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |\s
-			5 │ 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |\s
-			4 │ 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |\s
-			3 │ 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |\s
-			2 │ 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |\s
-			1 │ 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |\s
+			8 │   |   |   |   |   |   |   |   |\s
+			7 │   |   |   |   |   |   |   |   |\s
+			6 │   |   |   |   |   |   |   |   |\s
+			5 │   |   |   |   |   |   |   |   |\s
+			4 │   |   |   |   |   |   |   |   |\s
+			3 │   |   |   |   |   |   |   |   |\s
+			2 │   |   |   |   |   |   |   |   |\s
+			1 │   |   |   |   |   |   |   |   |\s
 			──┼────────────────────────────────
 			0 │ 1   2   3   4   5   6   7   8
 
@@ -73,23 +79,29 @@ class ChessBoardTest {
 
 	@Test
 	void smartPrintBoard() throws IllegalPositionException {
+		Movable mockT = mock(Piece.class);
+		when(mockT.toString()).thenReturn("T");
+
+		Movable mockZ = mock(Piece.class);
+		when(mockZ.toString()).thenReturn("Z");
+
 		ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 		System.setOut(new PrintStream(outContent));
 
 
-		board.setOccupation(new Coord(0, 0), true);
-		board.setOccupation(new Coord(2, 3), true);
+		board.setOccupation(new Coord(0, 0), mockT);
+		board.setOccupation(new Coord(2, 3), mockZ);
 		board.smartPrint();
 
 		String expectedOutput = """
-			8 │ 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |\s
-			7 │ 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |\s
-			6 │ 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |\s
-			5 │ 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |\s
-			4 │ 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 |\s
-			3 │ 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |\s
-			2 │ 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |\s
-			1 │ 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |\s
+			8 │   |   |   |   |   |   |   |   |\s
+			7 │   |   |   |   |   |   |   |   |\s
+			6 │   |   |   |   |   |   |   |   |\s
+			5 │   |   |   |   |   |   |   |   |\s
+			4 │   |   | Z |   |   |   |   |   |\s
+			3 │   |   |   |   |   |   |   |   |\s
+			2 │   |   |   |   |   |   |   |   |\s
+			1 │ T |   |   |   |   |   |   |   |\s
 			──┼────────────────────────────────
 			0 │ 1   2   3   4   5   6   7   8
 
