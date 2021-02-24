@@ -1,5 +1,8 @@
 package dev.negrel.fxchess.game;
 
+/*
+ * ICCFNotationParser is a parser for the international notation admitted by the ICCF.
+ */
 public class ICCFNotationParser implements NotationParser {
 	public Move parseMove(String rawMove) {
 		String fromX = rawMove.substring(0, 1);
