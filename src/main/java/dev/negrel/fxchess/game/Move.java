@@ -1,7 +1,5 @@
 package dev.negrel.fxchess.game;
 
-import dev.negrel.fxchess.game.board_exception.IllegalMoveException;
-import dev.negrel.fxchess.game.board_exception.IllegalPositionException;
 import org.jetbrains.annotations.NotNull;
 
 /*
@@ -16,15 +14,15 @@ public class Move {
 		this.to = to;
 	}
 
-	protected void reversePlayOn(ChessBoard board) throws IllegalPositionException, IllegalMoveException {
-		board.getMovable(to).move(from);
+	public Coord getFrom() {
+		return from;
 	}
 
-	protected void playOn(ChessBoard board) throws IllegalPositionException, IllegalMoveException {
-		board.getMovable(from).move(to);
+	public Coord getTo() {
+		return to;
 	}
 
-	public boolean equals(Move other) {
+	public boolean equals(@NotNull Move other) {
 		return this.from.equals(other.from) && this.to.equals(other.to);
 	}
 }

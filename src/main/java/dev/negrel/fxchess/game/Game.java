@@ -3,15 +3,15 @@ package dev.negrel.fxchess.game;
 import dev.negrel.fxchess.game.board_exception.IllegalMoveException;
 import dev.negrel.fxchess.game.board_exception.IllegalPositionException;
 
-import java.util.ArrayList;
+import java.util.Stack;
 
 public class Game {
-	private final ArrayList<Move> moves;
+	private final Stack<Move> moves;
 	private final NotationParser parser;
 	private final ChessBoard board = new ChessBoard();
 
 	public Game(NotationParser parser) {
-		moves = new ArrayList<Move>();
+		moves = new Stack<Move>();
 		this.parser = parser;
 		board.init();
 	}
@@ -32,9 +32,36 @@ public class Game {
 		playMove(m);
 	}
 
+
+	/**
+	 * Cancel the last played move.
+	 */
+	public void unplay() {
+		Move m = moves.pop();
+
+		try {
+			Movable piece = board.getMovable(m.getTo());
+			if (piece == null) {
+				throw new IllegalMoveException(null, m.getTo());
+			}
+
+			piece.move(m.getFrom());
+		} catch (IllegalPositionException | IllegalMoveException ignored) {
+		}
+	}
+
 	private void playMove(Move m) throws IllegalPositionException, IllegalMoveException {
-		m.playOn(board);
-		moves.add(m);
+		Movable piece = board.getMovable(m.getFrom());
+		if (piece == null) {
+			throw new IllegalMoveException(null, m.getFrom());
+		}
+
+		piece.move(m.getTo());
+		moves.push(m);
+	}
+
+	public void smartPrint() {
+		this.board.smartPrint();
 	}
 
 }
