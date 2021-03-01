@@ -1,5 +1,7 @@
 package dev.negrel.fxchess.game;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Coord define a 2D coordinate.
  */
@@ -33,7 +35,7 @@ public class Coord {
 	 * @param rawY the Y coordinates
 	 * @return a Coord object based on the given inputs.
 	 */
-	public static Coord fromString(String rawX, String rawY) {
+	public static Coord fromString(@NotNull String rawX, @NotNull String rawY) {
 		return new Coord(Integer.parseInt(rawX), Integer.parseInt(rawY));
 	}
 
@@ -51,7 +53,7 @@ public class Coord {
 		return y;
 	}
 
-	public boolean equals(Coord other) {
+	public boolean equals(@NotNull Coord other) {
 		return this.getX() == other.getX() && this.getY() == other.getY();
 	}
 
