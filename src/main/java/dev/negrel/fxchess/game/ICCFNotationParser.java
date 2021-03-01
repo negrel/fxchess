@@ -4,6 +4,13 @@ package dev.negrel.fxchess.game;
  * ICCFNotationParser is a parser for the international notation admitted by the ICCF.
  */
 public class ICCFNotationParser implements NotationParser {
+	/**
+	 * Parses the given raw move.
+	 *
+	 * @param rawMove the move to parse in the ICCF notation.
+	 * @return the parsed move.
+	 * @throws InvalidNotationException if the rawMove doesn't respect the ICCF notation.
+	 */
 	public Move parseMove(String rawMove) throws InvalidNotationException {
 		if (rawMove.length() != 4) {
 			throw new InvalidNotationException("ICCF", rawMove, "must have a length of 4");

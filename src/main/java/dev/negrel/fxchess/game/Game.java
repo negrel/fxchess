@@ -24,6 +24,12 @@ public class Game implements Serializable {
 		this(new ICCFNotationParser());
 	}
 
+	/**
+	 * Write the played moves of this Game to a file.
+	 *
+	 * @param filename the name of the file.
+	 * @throws IOException if we can't write to the file.
+	 */
 	public void writeToFile(String filename) throws IOException {
 		FileWriter fileWriter = new FileWriter(filename);
 		PrintWriter printWriter = new PrintWriter(fileWriter);
