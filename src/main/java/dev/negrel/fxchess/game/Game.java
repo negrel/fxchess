@@ -6,9 +6,10 @@ import dev.negrel.fxchess.game.board_exception.IllegalPositionException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Game {
+public class Game implements Serializable {
 	private final ArrayList<String> moves;
 	private final NotationParser parser;
 	private final ChessBoard board = new ChessBoard();
@@ -31,6 +32,9 @@ public class Game {
 			printWriter.println(rawMove);
 		}
 		printWriter.flush();
+
+		printWriter.close();
+		fileWriter.close();
 	}
 
 	private Coord adaptCoord(Coord c) {

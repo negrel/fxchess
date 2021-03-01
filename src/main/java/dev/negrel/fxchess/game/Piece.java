@@ -4,6 +4,7 @@ import dev.negrel.fxchess.game.board_exception.IllegalMoveException;
 import dev.negrel.fxchess.game.board_exception.IllegalPositionException;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.Serializable;
 import java.util.Iterator;
 
 /**
@@ -11,7 +12,7 @@ import java.util.Iterator;
  * All the pieces defined in the piece package inherit from
  * this class.
  */
-public abstract class Piece implements Movable {
+public abstract class Piece implements Movable, Serializable {
 	/**
 	 * The color of this piece (white or black).
 	 */

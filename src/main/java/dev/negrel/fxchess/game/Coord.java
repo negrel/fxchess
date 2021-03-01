@@ -2,10 +2,12 @@ package dev.negrel.fxchess.game;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.Serializable;
+
 /**
  * Coord define a 2D coordinate.
  */
-public class Coord {
+public class Coord implements Serializable {
 	/**
 	 * The coordinate on the X axis.
 	 */

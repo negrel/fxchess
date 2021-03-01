@@ -4,6 +4,7 @@ import dev.negrel.fxchess.game.board_exception.IllegalPositionException;
 import dev.negrel.fxchess.game.piece.*;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Vector;
@@ -12,7 +13,7 @@ import java.util.Vector;
  * ChessBoard defines a chessboard that contains Piece object.
  * This object is responsible from holding the chess piece.
  */
-public class ChessBoard {
+public class ChessBoard implements Serializable {
 	//	private static final ChessBoard singleton = new ChessBoard();
 
 	private final Case[][] cases;

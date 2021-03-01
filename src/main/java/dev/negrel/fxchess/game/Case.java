@@ -1,9 +1,11 @@
 package dev.negrel.fxchess.game;
 
+import java.io.Serializable;
+
 /**
  * Case defines a case on the Chessboard.
  */
-public class Case {
+public class Case implements Serializable {
 	private Movable movable;
 
 	Case(Movable m) {
