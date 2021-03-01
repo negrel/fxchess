@@ -13,7 +13,7 @@ public class KingTest {
 	King king;
 
 	public KingTest() throws IllegalPositionException {
-		king = new King(ChessBoard.getInstance(), new Coord(), Color.BLACK);
+		king = new King(new ChessBoard(), new Coord(), Color.BLACK);
 	}
 
 	@Test

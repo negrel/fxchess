@@ -14,7 +14,7 @@ public class BishopTest {
 	Bishop bishop;
 
 	public BishopTest() throws IllegalPositionException {
-		bishop = new Bishop(ChessBoard.getInstance(), new Coord(), Color.BLACK);
+		bishop = new Bishop(new ChessBoard(), new Coord(), Color.BLACK);
 	}
 
 	@Test

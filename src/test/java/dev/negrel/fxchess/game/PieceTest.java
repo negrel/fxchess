@@ -12,7 +12,7 @@ public class PieceTest {
 	PieceImpl piece;
 
 	public PieceTest() throws IllegalPositionException {
-		piece = new PieceImpl(ChessBoard.getInstance(), new Coord(), Color.BLACK);
+		piece = new PieceImpl(new ChessBoard(), new Coord(), Color.BLACK);
 	}
 
 	@Test

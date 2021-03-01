@@ -14,7 +14,7 @@ public class RookTest {
 	Rook rook;
 
 	public RookTest() throws IllegalPositionException {
-		rook = new Rook(ChessBoard.getInstance(), new Coord(), Color.BLACK);
+		rook = new Rook(new ChessBoard(), new Coord(), Color.BLACK);
 	}
 
 	@Test

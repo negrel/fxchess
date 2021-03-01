@@ -14,7 +14,7 @@ public class QueenTest {
 	Queen queen;
 
 	public QueenTest() throws IllegalPositionException {
-		queen = new Queen(ChessBoard.getInstance(), new Coord(), Color.BLACK);
+		queen = new Queen(new ChessBoard(), new Coord(), Color.BLACK);
 	}
 
 	@Test

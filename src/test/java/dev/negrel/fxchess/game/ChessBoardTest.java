@@ -16,7 +16,7 @@ class ChessBoardTest {
 
 	@BeforeEach
 	void classInit() {
-		this.board = ChessBoard.getInstance();
+		this.board = new ChessBoard();
 		this.board.clearBoard();
 	}
 
