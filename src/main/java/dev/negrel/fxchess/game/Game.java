@@ -3,21 +3,34 @@ package dev.negrel.fxchess.game;
 import dev.negrel.fxchess.game.board_exception.IllegalMoveException;
 import dev.negrel.fxchess.game.board_exception.IllegalPositionException;
 
-import java.util.Stack;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 
 public class Game {
-	private final Stack<Move> moves;
+	private final ArrayList<String> moves;
 	private final NotationParser parser;
 	private final ChessBoard board = new ChessBoard();
 
 	public Game(NotationParser parser) {
-		moves = new Stack<Move>();
+		moves = new ArrayList<String>();
 		this.parser = parser;
 		board.init();
 	}
 
 	public Game() {
 		this(new ICCFNotationParser());
+	}
+
+	public void writeToFile(String filename) throws IOException {
+		FileWriter fileWriter = new FileWriter(filename);
+		PrintWriter printWriter = new PrintWriter(fileWriter);
+
+		for (String rawMove : getMoves()) {
+			printWriter.println(rawMove);
+		}
+		printWriter.flush();
 	}
 
 	private Coord adaptCoord(Coord c) {
@@ -40,23 +53,8 @@ public class Game {
 		m = adaptMove(m);
 
 		playMove(m);
-	}
 
-	/**
-	 * Cancel the last played move.
-	 */
-	public void unplay() {
-		Move m = moves.pop();
-
-		try {
-			Movable piece = board.getMovable(m.getTo());
-			if (piece == null) {
-				throw new IllegalMoveException(null, m.getTo());
-			}
-
-			piece.move(m.getFrom());
-		} catch (IllegalPositionException | IllegalMoveException ignored) {
-		}
+		moves.add(rawMove);
 	}
 
 	private void playMove(Move m) throws IllegalPositionException, IllegalMoveException {
@@ -66,11 +64,13 @@ public class Game {
 		}
 
 		piece.move(m.getTo());
-		moves.push(m);
+	}
+
+	public ArrayList<String> getMoves() {
+		return moves;
 	}
 
 	public void smartPrint() {
 		this.board.smartPrint();
 	}
-
 }
