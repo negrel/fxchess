@@ -51,6 +51,10 @@ public class Coord {
 		return y;
 	}
 
+	public boolean equals(Coord other) {
+		return this.getX() == other.getX() && this.getY() == other.getY();
+	}
+
 	public String toString() {
 		return "{ " + x + ", " + y + " }";
 	}

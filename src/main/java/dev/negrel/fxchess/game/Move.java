@@ -23,4 +23,8 @@ public class Move {
 	protected void playOn(ChessBoard board) throws IllegalPositionException, IllegalMoveException {
 		board.getMovable(from).move(to);
 	}
+
+	public boolean equals(Move other) {
+		return this.from.equals(other.from) && this.to.equals(other.to);
+	}
 }
