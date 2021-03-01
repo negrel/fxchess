@@ -1,6 +1,7 @@
 package dev.negrel.fxchess.game;
 
 import dev.negrel.fxchess.game.board_exception.IllegalPositionException;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -13,8 +14,36 @@ import static org.mockito.Mockito.when;
 class ChessBoardTest {
 	ChessBoard board;
 
-	public ChessBoardTest() {
-		board = ChessBoard.getInstance();
+	@BeforeEach
+	void classInit() {
+		this.board = ChessBoard.getInstance();
+		this.board.clearBoard();
+	}
+
+	@Test
+	void init() {
+		board.init();
+
+		ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+		System.setOut(new PrintStream(outContent));
+
+		board.smartPrint();
+
+		String expectedOutput = """
+			8 │ R | k | B | Q | K | B | k | R |\s
+			7 │ P | P | P | P | P | P | P | P |\s
+			6 │   |   |   |   |   |   |   |   |\s
+			5 │   |   |   |   |   |   |   |   |\s
+			4 │   |   |   |   |   |   |   |   |\s
+			3 │   |   |   |   |   |   |   |   |\s
+			2 │ P | P | P | P | P | P | P | P |\s
+			1 │ R | k | B | Q | K | B | k | R |\s
+			──┼────────────────────────────────
+			0 │ 1   2   3   4   5   6   7   8
+
+			""";
+
+		assertEquals(expectedOutput, outContent.toString());
 	}
 
 	@Test

@@ -2,6 +2,7 @@ package dev.negrel.fxchess.game;
 
 import dev.negrel.fxchess.game.board_exception.IllegalMoveException;
 import dev.negrel.fxchess.game.board_exception.IllegalPositionException;
+import dev.negrel.fxchess.game.piece.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -25,6 +26,20 @@ public class ChessBoard {
 		moves = new ArrayList<Move>();
 
 		cases = new Case[8][8];
+		this.clearBoard();
+	}
+
+	/**
+	 * @return The ChessBoard singleton.
+	 */
+	public static ChessBoard getInstance() {
+		return ChessBoard.singleton;
+	}
+
+	/**
+	 * Clears the board by replacing all cases by a new Case object.
+	 */
+	public void clearBoard() {
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
 				cases[i][j] = new Case();
@@ -33,10 +48,44 @@ public class ChessBoard {
 	}
 
 	/**
-	 * @return The ChessBoard singleton.
+	 * Initializes the board.
 	 */
-	public static ChessBoard getInstance() {
-		return ChessBoard.singleton;
+	public void init() {
+		try {
+			initWithException();
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			System.exit(1);
+		}
+	}
+
+	private void initWithException() throws IllegalPositionException {
+		int[] pawnY = {1, 6};
+		int[] otherY = {0, 7};
+
+		for (int i = 0; i < 2; i++) {
+			int y = pawnY[i];
+			Color c = i == 0 ? Color.BLACK : Color.WHITE;
+			for (int j = 0; j < 8; j++) {
+				Coord pos = new Coord(j, y);
+				new Pawn(this, pos, c);
+			}
+		}
+
+		for (int i = 0; i < 2; i++) {
+			int y = otherY[i];
+			Color c = i == 0 ? Color.BLACK : Color.WHITE;
+			for (int j = 0; j < 8; j++) {
+				Coord pos = new Coord(j, y);
+				switch (j) {
+					case 0, 7 -> new Rook(this, pos, c);
+					case 1, 6 -> new Knight(this, pos, c);
+					case 2, 5 -> new Bishop(this, pos, c);
+					case 3 -> new Queen(this, pos, c);
+					case 4 -> new King(this, pos, c);
+				}
+			}
+		}
 	}
 
 	/**
