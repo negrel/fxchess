@@ -8,6 +8,8 @@ public class TP2Test {
 	@Test
 	void ex1() throws IllegalMoveException, IllegalPositionException, InvalidNotationException {
 		Game g = new Game(new ICCFNotationParser());
-		g.play("1234");
+		g.smartPrint();
+		g.play("1213");
+		g.smartPrint();
 	}
 }

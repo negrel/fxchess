@@ -20,6 +20,14 @@ public class Game {
 		this(new ICCFNotationParser());
 	}
 
+	private Coord adaptCoord(Coord c) {
+		return new Coord(c.getX() - 1, c.getY() - 1);
+	}
+
+	private Move adaptMove(Move m) {
+		return new Move(adaptCoord(m.getFrom()), adaptCoord(m.getTo()));
+	}
+
 	/**
 	 * Plays the given chess Move.
 	 *
@@ -29,9 +37,10 @@ public class Game {
 	 */
 	public void play(String rawMove) throws IllegalPositionException, IllegalMoveException, InvalidNotationException {
 		Move m = parser.parseMove(rawMove);
+		m = adaptMove(m);
+
 		playMove(m);
 	}
-
 
 	/**
 	 * Cancel the last played move.

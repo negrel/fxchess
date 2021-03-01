@@ -25,9 +25,9 @@ public class ChessBoard {
 		this.clearBoard();
 	}
 
-	/**
-	 * @return The ChessBoard singleton.
-	 */
+	// /**
+	//  * @return The ChessBoard singleton.
+	//  */
 	//	public static ChessBoard getInstance() {
 	//		return ChessBoard.singleton;
 	//	}
@@ -115,7 +115,6 @@ public class ChessBoard {
 		if (coord.getX() < 0 || coord.getX() >= 8 ||
 			coord.getY() < 0 || coord.getY() >= 8)
 			throw new IllegalPositionException(coord);
-
 	}
 
 	private Case getCase(@NotNull Coord coord) throws IllegalPositionException {
