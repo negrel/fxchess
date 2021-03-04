@@ -13,10 +13,15 @@ public class Game implements Serializable {
 	private final ArrayList<String> moves;
 	private final NotationParser parser;
 	private final ChessBoard board = new ChessBoard();
+	private int round;
+	private Color player;
 
 	public Game(NotationParser parser) {
 		moves = new ArrayList<String>();
 		this.parser = parser;
+		player = Color.WHITE;
+		round = 1;
+
 		board.init();
 	}
 
@@ -58,19 +63,29 @@ public class Game implements Serializable {
 	 * @throws IllegalPositionException if the move destination coordinates is out of board.
 	 * @throws IllegalMoveException     if the piece to move can't do this move.
 	 */
-	public void play(String rawMove) throws IllegalPositionException, IllegalMoveException, InvalidNotationException {
+	public void play(String rawMove) throws IllegalPositionException, IllegalMoveException, InvalidNotationException, OtherPlayerPieceException, SameColorException {
 		Move m = parser.parseMove(rawMove);
 		m = adaptMove(m);
-
 		playMove(m);
+		round++;
+		player = round % 2 == 0 ? Color.BLACK : Color.WHITE;
 
 		moves.add(rawMove);
 	}
 
-	private void playMove(Move m) throws IllegalPositionException, IllegalMoveException {
-		Movable piece = board.getMovable(m.getFrom());
+	private void playMove(Move m) throws IllegalPositionException, IllegalMoveException, OtherPlayerPieceException, SameColorException {
+		Piece piece = (Piece) board.getMovable(m.getFrom());
 		if (piece == null) {
 			throw new IllegalMoveException(null, m.getFrom());
+		}
+
+		if (!piece.color.equals(player)) {
+			throw new OtherPlayerPieceException(player, piece);
+		}
+
+		Piece destination = (Piece) board.getMovable(m.getTo());
+		if (destination != null && destination.color.equals(player)) {
+			throw new SameColorException(piece, m.getTo());
 		}
 
 		piece.move(m.getTo());

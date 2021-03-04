@@ -8,7 +8,7 @@ import java.io.*;
 
 public class TP2Test {
 	@Test
-	void ex1() throws IllegalMoveException, IllegalPositionException, InvalidNotationException {
+	void ex1() throws IllegalMoveException, IllegalPositionException, InvalidNotationException, OtherPlayerPieceException, SameColorException {
 		Game g = new Game(new ICCFNotationParser());
 		g.smartPrint();
 		g.play("1213");
@@ -16,7 +16,7 @@ public class TP2Test {
 	}
 
 	@Test
-	void ex2() throws IllegalMoveException, IllegalPositionException, InvalidNotationException, IOException {
+	void ex2() throws IllegalMoveException, IllegalPositionException, InvalidNotationException, IOException, OtherPlayerPieceException, SameColorException {
 		Game g = new Game(new ICCFNotationParser());
 		g.play("1213");
 		g.play("2223");
@@ -25,7 +25,7 @@ public class TP2Test {
 	}
 
 	@Test
-	void ex3() throws IllegalMoveException, IllegalPositionException, InvalidNotationException, IOException, ClassNotFoundException {
+	void ex3() throws IllegalMoveException, IllegalPositionException, InvalidNotationException, IOException, ClassNotFoundException, OtherPlayerPieceException, SameColorException {
 		Game g = new Game(new ICCFNotationParser());
 		g.play("1213");
 		g.play("2223");
