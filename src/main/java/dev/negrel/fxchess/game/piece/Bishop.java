@@ -25,8 +25,8 @@ public class Bishop extends Piece {
 		return (diffX == diffY && diffY > 0);
 	}
 
-	public String toString() {
-		return "B";
+	public char toChar() {
+		return 'B';
 	}
 }
 

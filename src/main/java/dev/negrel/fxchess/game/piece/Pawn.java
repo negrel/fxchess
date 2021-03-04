@@ -22,7 +22,7 @@ public class Pawn extends Piece {
 		int diffX = destination.getX() - coord.getX();
 		int diffY = destination.getY() - coord.getY();
 
-		int y = (color == Color.BLACK ? 1 : -1);
+		int y = (color == Color.BLACK ? -1 : 1);
 
 		if (Math.abs(diffX) == 1 && diffY == y)
 			return true;
@@ -30,8 +30,8 @@ public class Pawn extends Piece {
 		return diffX == 0 && diffY == y;
 	}
 
-	public String toString() {
-		return "P";
+	public char toChar() {
+		return 'P';
 	}
 }
 

@@ -28,8 +28,8 @@ public class King extends Piece {
 		return diffX <= 1 && diffY <= 1;
 	}
 
-	public String toString() {
-		return "K";
+	public char toChar() {
+		return 'K';
 	}
 }
 

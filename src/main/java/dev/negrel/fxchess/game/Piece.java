@@ -59,6 +59,8 @@ public abstract class Piece implements Movable, Serializable {
 	 */
 	protected abstract boolean isValidMove(Coord destination);
 
+	protected abstract char toChar();
+
 	/**
 	 * Move the piece to the given position
 	 *
@@ -88,4 +90,12 @@ public abstract class Piece implements Movable, Serializable {
 
 		return true;
 	}
+
+
+	@Override
+	public String toString() {
+		String color = "\33".concat(this.color.equals(Color.WHITE) ? "[30;107m" : "[97;40m");
+		return color.concat(String.valueOf(toChar())).concat("\033[39;m");
+	}
+
 }

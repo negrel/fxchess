@@ -28,8 +28,8 @@ public class Queen extends Piece {
 		return diffX == diffY || (diffX > 0 && diffY == 0) || (diffY > 0 && diffX == 0);
 	}
 
-	public String toString() {
-		return "Q";
+	public char toChar() {
+		return 'Q';
 	}
 }
 

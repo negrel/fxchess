@@ -25,13 +25,13 @@ public class Knight extends Piece {
 		return (diffX == 2 && diffY == 1) || (diffY == 2 && diffX == 1);
 	}
 
+	public char toChar() {
+		return 'k';
+	}
+
 	// The knight piece jump above piece therefore, it's path is always valid.
 	protected boolean isValidPath(Coord destination) {
 		return true;
-	}
-
-	public String toString() {
-		return "k";
 	}
 }
 

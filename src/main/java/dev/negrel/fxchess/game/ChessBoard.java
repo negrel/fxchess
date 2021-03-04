@@ -57,12 +57,14 @@ public class ChessBoard implements Serializable {
 	}
 
 	private void initWithException() throws IllegalPositionException {
+		clearBoard();
+
 		int[] pawnY = {1, 6};
 		int[] otherY = {0, 7};
 
 		for (int i = 0; i < 2; i++) {
 			int y = pawnY[i];
-			Color c = i == 0 ? Color.BLACK : Color.WHITE;
+			Color c = i == 1 ? Color.BLACK : Color.WHITE;
 			for (int j = 0; j < 8; j++) {
 				Coord pos = new Coord(j, y);
 				new Pawn(this, pos, c);
@@ -71,7 +73,7 @@ public class ChessBoard implements Serializable {
 
 		for (int i = 0; i < 2; i++) {
 			int y = otherY[i];
-			Color c = i == 0 ? Color.BLACK : Color.WHITE;
+			Color c = i == 1 ? Color.BLACK : Color.WHITE;
 			for (int j = 0; j < 8; j++) {
 				Coord pos = new Coord(j, y);
 				switch (j) {
