@@ -9,6 +9,9 @@ import java.io.PrintWriter;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * Game define a chess game.
+ */
 public class Game implements Serializable {
 	private final ArrayList<String> moves;
 	private final NotationParser parser;
@@ -27,6 +30,10 @@ public class Game implements Serializable {
 
 	public Game() {
 		this(new ICCFNotationParser());
+	}
+
+	public int getRound() {
+		return round;
 	}
 
 	/**
@@ -64,9 +71,10 @@ public class Game implements Serializable {
 	 * @throws IllegalMoveException     if the piece to move can't do this move.
 	 */
 	public void play(String rawMove) throws IllegalPositionException, IllegalMoveException, InvalidNotationException, OtherPlayerPieceException, SameColorException {
-		Move m = parser.parseMove(rawMove);
-		m = adaptMove(m);
-		playMove(m);
+		Move move = parser.parseMove(rawMove);
+		Move adaptedMove = adaptMove(move);
+		playMove(adaptedMove);
+
 		round++;
 		player = round % 2 == 0 ? Color.BLACK : Color.WHITE;
 
@@ -98,4 +106,72 @@ public class Game implements Serializable {
 	public void smartPrint() {
 		this.board.smartPrint();
 	}
+
+	//	public boolean isCheck() {
+	//		ArrayList<Piece> playerPieces = new ArrayList<>();
+	//		King otherPlayerKing = null;
+	//
+	//		for (Case[] row : board.getCases()) {
+	//			for (Case c : row) {
+	//				if (!c.isOccupied())
+	//					continue;
+	//
+	//				Piece piece = (Piece) c.getMovable();
+	//				if (piece.color.equals(player))
+	//					playerPieces.add(piece);
+	//				else if (piece instanceof King)
+	//					otherPlayerKing = (King) piece;
+	//			}
+	//		}
+	//		assert otherPlayerKing != null;
+	//
+	//		for (Piece piece : playerPieces) {
+	//			if (piece.canMove(otherPlayerKing.getCoord()))
+	//				return true;
+	//		}
+	//
+	//		return false;
+	//	}
+	//
+	//	public boolean isCheckMate() {
+	//		ArrayList<Piece> playerPieces = new ArrayList<>();
+	//		King otherPlayerKing = null;
+	//
+	//		for (Case[] row : board.getCases()) {
+	//			for (Case c : row) {
+	//				if (!c.isOccupied())
+	//					continue;
+	//
+	//				Piece piece = (Piece) c.getMovable();
+	//				if (piece.color.equals(player))
+	//					playerPieces.add(piece);
+	//				else if (piece instanceof King)
+	//					otherPlayerKing = (King) piece;
+	//			}
+	//		}
+	//
+	//		assert otherPlayerKing != null;
+	//		ArrayList<Coord> otherPlayerKingPossibleMove = new ArrayList<>();
+	//		for (int i = -1; i < 2; i++) {
+	//			int x = otherPlayerKing.getCoord().getX();
+	//			for (int j = -1; j < 2; j++) {
+	//				int y = otherPlayerKing.getCoord().getY();
+	//				Coord c = new Coord(x, y);
+	//
+	//				if (c.equals(otherPlayerKing.getCoord()))
+	//					continue;
+	//
+	//				otherPlayerKingPossibleMove.add(c);
+	//			}
+	//		}
+	//
+	//		for (Coord possibleMove : otherPlayerKingPossibleMove) {
+	//			for (Piece piece : playerPieces) {
+	//				if (piece.canMove(possibleMove))
+	//					return true;
+	//			}
+	//		}
+	//
+	//		return false;
+	//	}
 }

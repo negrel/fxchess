@@ -7,6 +7,9 @@ import dev.negrel.fxchess.game.Piece;
 import dev.negrel.fxchess.game.board_exception.IllegalPositionException;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Rook defines the Rook chess piece.
  *
@@ -18,7 +21,7 @@ public class Rook extends Piece {
 	}
 
 	@Override
-	protected boolean isValidMove(Coord destination) {
+	protected boolean isValidMove(@NotNull Coord destination) {
 		int diffX = Math.abs(destination.getX() - coord.getX());
 		int diffY = Math.abs(destination.getY() - coord.getY());
 
@@ -27,6 +30,31 @@ public class Rook extends Piece {
 
 	public char toChar() {
 		return 'R';
+	}
+
+	@Override
+	public List<Coord> legalMove() {
+		List<Coord> result = new ArrayList<>();
+
+		// Horizontal check
+		result.addAll(
+			legalCoords(new Coord(0, coord.getY()))
+		);
+
+		result.addAll(
+			legalCoords(new Coord(8, coord.getY()))
+		);
+
+		// Vertical check
+		result.addAll(
+			legalCoords(new Coord(coord.getX(), 0))
+		);
+
+		result.addAll(
+			legalCoords(new Coord(coord.getX(), 8))
+		);
+
+		return result;
 	}
 }
 

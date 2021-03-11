@@ -49,8 +49,13 @@ public class PieceTest {
 		}
 
 		@Override
-		protected boolean isValidMove(Coord destination) {
+		protected boolean isValidMove(@NotNull Coord destination) {
 			return validMove;
+		}
+
+		@Override
+		protected char toChar() {
+			return 0;
 		}
 	}
 }

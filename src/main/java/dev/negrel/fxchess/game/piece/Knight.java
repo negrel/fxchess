@@ -7,6 +7,9 @@ import dev.negrel.fxchess.game.Piece;
 import dev.negrel.fxchess.game.board_exception.IllegalPositionException;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Knight defines the knight chess piece.
  *
@@ -18,7 +21,12 @@ public class Knight extends Piece {
 	}
 
 	@Override
-	protected boolean isValidMove(Coord destination) {
+	public boolean isLegalMove(@NotNull Coord destination) {
+		return isValidMove(destination) && isLegalDestination(destination);
+	}
+
+	@Override
+	protected boolean isValidMove(@NotNull Coord destination) {
 		int diffX = Math.abs(destination.getX() - coord.getX());
 		int diffY = Math.abs(destination.getY() - coord.getY());
 
@@ -29,9 +37,26 @@ public class Knight extends Piece {
 		return 'k';
 	}
 
-	// The knight piece jump above piece therefore, it's path is always valid.
-	protected boolean isValidPath(Coord destination) {
-		return true;
+	@Override
+	public List<Coord> legalMove() {
+		List<Coord> result = new ArrayList<>();
+		Coord[] coords = {
+			new Coord(coord.getX() - 2, coord.getY() - 1),
+			new Coord(coord.getX() - 2, coord.getY() + 1),
+			new Coord(coord.getX() - 1, coord.getY() - 2),
+			new Coord(coord.getX() - 1, coord.getY() + 2),
+			new Coord(coord.getX() + 1, coord.getY() - 2),
+			new Coord(coord.getX() + 1, coord.getY() + 2),
+			new Coord(coord.getX() + 2, coord.getY() - 1),
+			new Coord(coord.getX() + 2, coord.getY() + 1),
+		};
+
+		for (Coord coord : coords) {
+			if (isLegalMove(coord))
+				result.add(coord);
+		}
+
+		return result;
 	}
 }
 

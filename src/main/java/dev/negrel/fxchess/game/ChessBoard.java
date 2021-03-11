@@ -6,6 +6,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.Vector;
 
@@ -32,6 +33,11 @@ public class ChessBoard implements Serializable {
 	//	public static ChessBoard getInstance() {
 	//		return ChessBoard.singleton;
 	//	}
+
+	public static boolean isValidCoord(@NotNull Coord coord) {
+		return coord.getX() >= 0 || coord.getX() < 8 ||
+			coord.getY() >= 0 || coord.getY() < 8;
+	}
 
 	/**
 	 * Clears the board by replacing all cases by a new Case object.
@@ -87,13 +93,12 @@ public class ChessBoard implements Serializable {
 		}
 	}
 
-
-	public Iterator<Case> getIterator(@NotNull Coord from, @NotNull Coord to) {
+	public Iterator<Case> getIterator(@NotNull Coord from, @NotNull Coord to) throws IllegalPositionException {
 		int diffX = Math.abs(to.getX() - from.getX());
 		int diffY = Math.abs(to.getY() - from.getY());
 
 		if (diffX == 0 && diffY == 0)
-			return null;
+			return Collections.emptyIterator();
 
 		// Only diagonal, horizontal and vertical line are allowed
 		if (!(diffX == diffY || (diffX > 0 && diffY == 0) || (diffY > 0 && diffX == 0)))
@@ -103,11 +108,8 @@ public class ChessBoard implements Serializable {
 		ArrayList<Case> l = new ArrayList<Case>();
 		for (int i = from.getX(); i < to.getX(); i++) {
 			for (int j = from.getY(); j < to.getY(); j++) {
-				try {
-					Case c = getCase(new Coord(i, j));
-					l.add(c);
-				} catch (IllegalPositionException ignored) {
-				}
+				Case c = getCase(new Coord(i, j));
+				l.add(c);
 			}
 		}
 
@@ -115,8 +117,7 @@ public class ChessBoard implements Serializable {
 	}
 
 	private void checkCoord(@NotNull Coord coord) throws IllegalPositionException {
-		if (coord.getX() < 0 || coord.getX() >= 8 ||
-			coord.getY() < 0 || coord.getY() >= 8)
+		if (!ChessBoard.isValidCoord(coord))
 			throw new IllegalPositionException(coord);
 	}
 
@@ -131,6 +132,27 @@ public class ChessBoard implements Serializable {
 
 	private void setMovable(@NotNull Coord coord, Movable m) throws IllegalPositionException {
 		getCase(coord).setMovable(m);
+	}
+
+	public boolean isLegalPath(@NotNull Coord from, @NotNull Coord to) {
+		if (from.equals(to))
+			return false;
+
+		Iterator<Case> it;
+		try {
+			it = getIterator(from, to);
+		} catch (IllegalPositionException ignored) {
+			return false;
+		}
+
+		while (it.hasNext()) {
+			Case c = it.next();
+
+			if (it.hasNext() && c.isOccupied())
+				return false;
+		}
+
+		return true;
 	}
 
 	/**
