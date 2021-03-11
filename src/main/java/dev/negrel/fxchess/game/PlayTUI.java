@@ -12,10 +12,9 @@ public class PlayTUI {
 		Game g = new Game();
 		g.smartPrint();
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		int round = 1;
 
 		while (true) {
-			System.out.printf("Player %s turn, enter your move using the ICCF notation:%n", round % 2 == 0 ? Color.BLACK : Color.WHITE);
+			System.out.printf("Player %s turn, enter your move using the ICCF notation:%n", g.getRound() % 2 == 0 ? Color.BLACK : Color.WHITE);
 			try {
 				String rawMove = br.readLine();
 				g.play(rawMove);
@@ -26,7 +25,6 @@ public class PlayTUI {
 				System.out.println(e.toString());
 				continue;
 			}
-			round++;
 			g.smartPrint();
 		}
 	}
