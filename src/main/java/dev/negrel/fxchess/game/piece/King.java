@@ -44,7 +44,7 @@ public class King extends Piece {
 				if (i == 0 && j == 0)
 					continue;
 
-				Coord c = new Coord(j, i);
+				Coord c = new Coord(coord.getX() + j, coord.getY() + i);
 				if (isLegalMove(c))
 					result.add(c);
 			}

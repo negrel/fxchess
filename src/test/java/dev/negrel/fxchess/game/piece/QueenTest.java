@@ -37,7 +37,6 @@ public class QueenTest {
 	@Test
 	void legalMove() {
 		List<Coord> legalMoves = queen.legalMove();
-		System.out.println(legalMoves);
 		assertEquals(21, legalMoves.size());
 	}
 }

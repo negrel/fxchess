@@ -6,8 +6,9 @@ import dev.negrel.fxchess.game.Coord;
 import dev.negrel.fxchess.game.board_exception.IllegalPositionException;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class RookTest {
@@ -32,5 +33,11 @@ public class RookTest {
 		assertFalse(rook.isValidMove(new Coord(-5, -5)));
 		assertFalse(rook.isValidMove(new Coord(-5, 1)));
 		assertFalse(rook.isValidMove(new Coord(0, 0)));
+	}
+
+	@Test
+	void legalMove() throws IllegalPositionException {
+		List<Coord> legalMoves = rook.legalMove();
+		assertEquals(14, legalMoves.size());
 	}
 }
