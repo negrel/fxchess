@@ -35,8 +35,8 @@ public class ChessBoard implements Serializable {
 	//	}
 
 	public static boolean isValidCoord(@NotNull Coord coord) {
-		return coord.getX() >= 0 || coord.getX() < 8 ||
-			coord.getY() >= 0 || coord.getY() < 8;
+		return coord.getX() >= 0 && coord.getX() < 8 &&
+			coord.getY() >= 0 && coord.getY() < 8;
 	}
 
 	/**
@@ -145,8 +145,10 @@ public class ChessBoard implements Serializable {
 			return false;
 		}
 
+		// Skip the first case.
+		Case c = it.hasNext() ? it.next() : null;
 		while (it.hasNext()) {
-			Case c = it.next();
+			c = it.next();
 
 			if (it.hasNext() && c.isOccupied())
 				return false;
