@@ -5,6 +5,8 @@ import dev.negrel.fxchess.game.board_exception.IllegalPositionException;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -56,6 +58,11 @@ public class PieceTest {
 		@Override
 		protected char toChar() {
 			return 0;
+		}
+
+		@Override
+		public List<Coord> legalMove() {
+			return null;
 		}
 	}
 }

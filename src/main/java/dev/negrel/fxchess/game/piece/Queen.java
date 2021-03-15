@@ -44,7 +44,7 @@ public class Queen extends Piece {
 		);
 
 		result.addAll(
-			legalCoords(new Coord(8, coord.getY()))
+			legalCoords(new Coord(7, coord.getY()))
 		);
 
 		// Vertical check
@@ -53,7 +53,7 @@ public class Queen extends Piece {
 		);
 
 		result.addAll(
-			legalCoords(new Coord(coord.getX(), 8))
+			legalCoords(new Coord(coord.getX(), 7))
 		);
 
 		// Diagonal check
@@ -74,13 +74,13 @@ public class Queen extends Piece {
 		result.addAll(legalCoords(
 			new Coord(
 				Math.max(0, coord.getX() - coord.getY()),
-				coord.getY() + (7 - coord.getY())
+				Math.min(7, coord.getY() + coord.getX())
 			)
 		));
 
 		result.addAll(legalCoords(
 			new Coord(
-				coord.getX() + (7 - coord.getX()),
+				Math.min(7, coord.getX() + coord.getY()),
 				Math.max(0, coord.getY() - coord.getX())
 			)
 		));

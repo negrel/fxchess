@@ -47,16 +47,37 @@ public abstract class Piece implements Movable, Serializable {
 		List<Coord> result = new ArrayList<>();
 
 		int diffX = coord.getX() - to.getX();
+		int incX = diffX > 0 ? 1 : -1;
+
 		int diffY = coord.getY() - to.getY();
+		int incY = diffY > 0 ? 1 : -1;
 
+		boolean ok = false;
 
-		for (int i = to.getY(); i != coord.getY(); i += diffY) {
-			for (int j = to.getX(); j != coord.getX(); j += diffX) {
-				Coord c = new Coord(j, i);
-				if (result.isEmpty() && isLegalMove(c))
-					continue;
-
-				result.add(c);
+		if (diffX == 0 && diffY != 0) {
+			for (int i = to.getY(); i != coord.getY(); i += incY) {
+				Coord c = new Coord(coord.getX(), i);
+				if (ok || isLegalMove(c)) {
+					result.add(c);
+					ok = true;
+				}
+			}
+		} else if (diffY == 0 && diffX != 0) {
+			for (int i = to.getX(); i != coord.getX(); i += incX) {
+				Coord c = new Coord(i, coord.getY());
+				if (ok || isLegalMove(c)) {
+					result.add(c);
+					ok = true;
+				}
+			}
+		} else if (diffX == diffY) {
+			for (int i = -diffX; i != 0; i += incX) {
+				Coord c = new Coord(coord.getX() + i, coord.getY() + (i * -incY));
+				boolean isLegal = isLegalMove(c);
+				if (ok || isLegal) {
+					result.add(c);
+					ok = true;
+				}
 			}
 		}
 
@@ -70,7 +91,10 @@ public abstract class Piece implements Movable, Serializable {
 	 * @return true if this Piece can move to the destination.
 	 */
 	public boolean isLegalMove(@NotNull Coord destination) {
-		return isValidMove(destination) && isLegalDestination(destination) && board.isLegalPath(this.coord, destination);
+		boolean isValid = isValidMove(destination);
+		boolean isLegalDst = isLegalDestination(destination);
+		boolean isLegalPath = board.isLegalPath(this.coord, destination);
+		return isValid && isLegalDst && isLegalPath;
 	}
 
 	/**
@@ -91,7 +115,9 @@ public abstract class Piece implements Movable, Serializable {
 	public boolean isLegalDestination(@NotNull Coord destination) {
 		try {
 			Piece p = (Piece) board.getMovable(destination);
-			if (p != null && !p.color.equals(color))
+			if (p == null)
+				return true;
+			if (!p.color.equals(color))
 				return true;
 
 		} catch (IllegalPositionException ignored) {

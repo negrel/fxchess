@@ -6,8 +6,9 @@ import dev.negrel.fxchess.game.Coord;
 import dev.negrel.fxchess.game.board_exception.IllegalPositionException;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class KnightTest {
 	Knight knight;
@@ -49,5 +50,15 @@ public class KnightTest {
 
 
 		assertFalse(knight.isValidMove(new Coord(0, 0)));
+	}
+
+	@Test
+	void legalMove() throws IllegalPositionException {
+		List<Coord> legalMoves = knight.legalMove();
+		assertEquals(2, legalMoves.size());
+
+		knight = new Knight(new ChessBoard(), new Coord(3, 3), Color.BLACK);
+		legalMoves = knight.legalMove();
+		assertEquals(8, legalMoves.size());
 	}
 }
