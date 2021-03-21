@@ -23,10 +23,7 @@ public class Game implements Serializable {
 	public Game(NotationParser parser) {
 		moves = new ArrayList<String>();
 		this.parser = parser;
-		player = Color.WHITE;
-		round = 1;
-
-		board.init();
+		this.init();
 	}
 
 	public Game() {
@@ -173,5 +170,12 @@ public class Game implements Serializable {
 		}
 
 		return false;
+	}
+
+	public void init() {
+		player = Color.WHITE;
+		round = 1;
+
+		board.init();
 	}
 }

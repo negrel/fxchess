@@ -70,10 +70,10 @@ public class ChessBoard implements Serializable {
 		for (int i = 0; i < 2; i++) {
 			int y = pawnY[i];
 			Color c = i == 1 ? Color.BLACK : Color.WHITE;
-			//			for (int j = 0; j < 8; j++) {
-			//				Coord pos = new Coord(j, y);
-			//				new Pawn(this, pos, c);
-			//			}
+			for (int j = 0; j < 8; j++) {
+				Coord pos = new Coord(j, y);
+				new Pawn(this, pos, c);
+			}
 		}
 
 		for (int i = 0; i < 2; i++) {

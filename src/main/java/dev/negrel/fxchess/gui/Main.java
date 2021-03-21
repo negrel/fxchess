@@ -69,6 +69,7 @@ public class Main extends Application {
 				else
 					pressedCoord = null;
 			}
+
 			case MOVE -> {
 				Coord releasedCoord = canvas.adaptCoord(event.getX(), event.getY());
 				try {
@@ -91,8 +92,9 @@ public class Main extends Application {
 				}
 				state = State.PICK;
 			}
+
 			case END_GAME -> {
-				canvas = new ChessBoard(game.board, loadAssets());
+				game.init();
 				this.checkCoord = null;
 				state = State.PICK;
 			}
@@ -103,8 +105,10 @@ public class Main extends Application {
 
 	private void drawChessBoard() {
 		canvas.drawChessBoard();
+		System.out.println(state);
+
 		if (checkCoord != null) {
-			canvas.drawCaseAt(checkCoord, Color.ORANGERED);
+			canvas.drawCaseAt(checkCoord, Color.ORANGE);
 		}
 
 		switch (state) {
@@ -135,7 +139,6 @@ public class Main extends Application {
 			case END_GAME:
 				assert checkCoord != null;
 				canvas.drawCaseAt(checkCoord, Color.RED);
-
 				break;
 
 			default:
