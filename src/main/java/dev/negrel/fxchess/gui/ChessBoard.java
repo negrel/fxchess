@@ -10,7 +10,7 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import org.jetbrains.annotations.NotNull;
 
-public class ChessBoard extends Canvas {
+class ChessBoard extends Canvas {
 	private final GraphicsContext ctx = this.getGraphicsContext2D();
 	private final dev.negrel.fxchess.engine.ChessBoard board;
 	private final Image[][] images;
@@ -51,16 +51,24 @@ public class ChessBoard extends Canvas {
 		return images[color][index];
 	}
 
+	/**
+	 * Draw the chessboard on the canvas.
+	 */
 	public void drawChessBoard() {
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
 				Coord coord = new Coord(i, j);
 				Color color = coord.getX() % 2 != coord.getY() % 2 ? Color.WHITE : Color.GREY;
-				drawCaseAt(coord, color);
+				drawCase(coord, color);
 			}
 		}
 	}
 
+	/**
+	 * @param x is the x axis position on the canvas.
+	 * @param y is the y axis position on the canvas.
+	 * @return coordinate of a case on the chessboard.
+	 */
 	public Coord adaptCoord(double x, double y) {
 		x = x / getCaseWidth();
 		y = y / getCaseHeight();
@@ -68,11 +76,24 @@ public class ChessBoard extends Canvas {
 		return new Coord(x, y);
 	}
 
+	/**
+	 * Draw a chessboard case on the canvas.
+	 *
+	 * @param x     is the x axis position on the canvas.
+	 * @param y     is the y axis position on the canvas.
+	 * @param color is the color of the case.
+	 */
 	public void drawCase(double x, double y, @NotNull Color color) {
-		this.drawCaseAt(adaptCoord(x, y), color);
+		this.drawCase(adaptCoord(x, y), color);
 	}
 
-	public void drawCaseAt(@NotNull Coord coord, @NotNull Color color) {
+	/**
+	 * Draw a chessboard case on the canvas.
+	 *
+	 * @param coord the coordinate of the case on the chessboard.
+	 * @param color the color to use to paint the case.
+	 */
+	public void drawCase(@NotNull Coord coord, @NotNull Color color) {
 		GraphicsContext ctx = this.getGraphicsContext2D();
 
 		double caseWidth = getCaseWidth();
@@ -104,6 +125,4 @@ public class ChessBoard extends Canvas {
 	private double getCaseWidth() {
 		return this.getWidth() / 8.0;
 	}
-
-
 }

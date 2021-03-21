@@ -20,7 +20,7 @@ import java.util.List;
 public class Main extends Application {
 	ChessBoard canvas;
 	Game game = new Game();
-	Coord pressedCoord;
+	Coord pickedCoord;
 	private State state = State.PICK;
 	private Coord checkCoord = null;
 
@@ -29,10 +29,13 @@ public class Main extends Application {
 	}
 
 	private void initialize(Stage stage) {
+		// Create the canvas
 		canvas = new ChessBoard(game.board, loadAssets());
+		// Set the window size and min width
 		stage.setWidth(720);
 		stage.setMinWidth(480);
 
+		// Fix the window aspect ratio
 		stage.minHeightProperty().bind(stage.widthProperty());
 		stage.maxHeightProperty().bind(stage.widthProperty());
 	}
@@ -42,11 +45,15 @@ public class Main extends Application {
 		initialize(stage);
 
 		HBox hbox = new HBox(canvas);
+		// Bind the canvas size to the window size.
 		canvas.widthProperty().bind(hbox.widthProperty());
 		canvas.heightProperty().bind(hbox.heightProperty());
+
+		// Redraw on resize.
 		canvas.heightProperty().addListener((observable, oldValue, newValue) -> {
 			drawChessBoard();
 		});
+		// Handle players click.
 		canvas.setOnMouseClicked(this::handleClick);
 
 		stage.setScene(new Scene(hbox));
@@ -56,43 +63,59 @@ public class Main extends Application {
 	}
 
 	private void handleClick(MouseEvent event) {
+		// Depending on the state of the game
+		// the click will be handled differently.
 		switch (state) {
+			// A player pick a chess piece.
 			case PICK -> {
-				pressedCoord = canvas.adaptCoord(event.getX(), event.getY());
+				// Register the coordinate of the selected piece.
+				pickedCoord = canvas.adaptCoord(event.getX(), event.getY());
+				// Try to get it.
 				Piece p = null;
 				try {
-					p = (Piece) game.board.getMovable(pressedCoord);
+					p = (Piece) game.board.getMovable(pickedCoord);
 				} catch (IllegalPositionException ignored) {
 				}
+				// If success, change state to move.
 				if (p != null && p.color.equals(game.getPlayer()))
 					state = State.MOVE;
-				else
-					pressedCoord = null;
+				else // Otherwise, nothing happen.
+					pickedCoord = null;
 			}
 
+			// A player tried to move the selected piece.
 			case MOVE -> {
-				Coord releasedCoord = canvas.adaptCoord(event.getX(), event.getY());
+				Coord moveCoord = canvas.adaptCoord(event.getX(), event.getY());
+				// Try to play the move.
 				try {
-					game.playMove(new Move(pressedCoord, releasedCoord));
-					if (pressedCoord.equals(checkCoord)) {
+					game.playMove(new Move(pickedCoord, moveCoord));
+					// The player try to avoid a check mate.
+					if (pickedCoord.equals(checkCoord)) {
 						checkCoord = null;
-					} else if (releasedCoord.equals(checkCoord)) {
+					}
+					// Player killed the opponent king.
+					else if (moveCoord.equals(checkCoord)) {
 						state = State.END_GAME;
 						drawChessBoard();
 						return;
 					}
-
-				} catch (Exception ignored) {
+				}
+				// Catch errors on move.
+				catch (Exception ignored) {
 				}
 
+				// Check if this move put the
+				// opponent in check.
 				if (game.isCheck()) {
 					checkCoord = game.getPlayerKing().getCoord();
+					// If check and mate, end of game.
 					if (game.isCheckMate())
 						state = State.END_GAME;
 				}
 				state = State.PICK;
 			}
 
+			// Start another game.
 			case END_GAME -> {
 				game.init();
 				this.checkCoord = null;
@@ -100,25 +123,27 @@ public class Main extends Application {
 			}
 		}
 
+		// Update the canvas.
 		drawChessBoard();
 	}
 
 	private void drawChessBoard() {
 		canvas.drawChessBoard();
-		System.out.println(state);
 
+		// If check, draw the king case in orange.
 		if (checkCoord != null) {
-			canvas.drawCaseAt(checkCoord, Color.ORANGE);
+			canvas.drawCase(checkCoord, Color.ORANGE);
 		}
 
 		switch (state) {
 			case PICK:
 				break;
 
+			// Draw possibles moves.
 			case MOVE:
 				Piece p = null;
 				try {
-					p = (Piece) game.board.getMovable(pressedCoord);
+					p = (Piece) game.board.getMovable(pickedCoord);
 				} catch (IllegalPositionException ignored) {
 				}
 
@@ -132,13 +157,14 @@ public class Main extends Application {
 				}
 
 				for (Coord move : moves) {
-					canvas.drawCaseAt(move, Color.GREEN);
+					canvas.drawCase(move, Color.GREEN);
 				}
 				break;
 
+			// Draw opponent dead king case in red.
 			case END_GAME:
 				assert checkCoord != null;
-				canvas.drawCaseAt(checkCoord, Color.RED);
+				canvas.drawCase(checkCoord, Color.RED);
 				break;
 
 			default:
