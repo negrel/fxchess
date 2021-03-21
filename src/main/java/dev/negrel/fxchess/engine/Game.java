@@ -36,6 +36,10 @@ public class Game implements Serializable {
 		return round;
 	}
 
+	public Color getPlayer() {
+		return player;
+	}
+
 	/**
 	 * Write the played moves of this Game to a file.
 	 *
@@ -63,6 +67,7 @@ public class Game implements Serializable {
 		return new Move(adaptCoord(m.getFrom()), adaptCoord(m.getTo()));
 	}
 
+
 	/**
 	 * Plays the given chess Move.
 	 *
@@ -75,13 +80,10 @@ public class Game implements Serializable {
 		Move adaptedMove = adaptMove(move);
 		playMove(adaptedMove);
 
-		round++;
-		player = round % 2 == 0 ? Color.BLACK : Color.WHITE;
-
 		moves.add(rawMove);
 	}
 
-	private void playMove(Move m) throws IllegalPositionException, IllegalMoveException, OtherPlayerPieceException, SameColorException {
+	public void playMove(Move m) throws IllegalPositionException, IllegalMoveException, OtherPlayerPieceException, SameColorException {
 		Piece piece = (Piece) board.getMovable(m.getFrom());
 		if (piece == null) {
 			throw new IllegalMoveException(null, m.getFrom());
@@ -97,6 +99,9 @@ public class Game implements Serializable {
 		}
 
 		piece.move(m.getTo());
+
+		round++;
+		player = round % 2 == 0 ? Color.BLACK : Color.WHITE;
 	}
 
 	public ArrayList<String> getMoves() {

@@ -38,36 +38,39 @@ public class Bishop extends Piece {
 		List<Coord> result = new ArrayList<>();
 
 		// Diagonal check
+		// Bottom right
 		result.addAll(legalCoords(
 			new Coord(
-				Math.max(0, coord.getX() - coord.getY()),
-				Math.max(0, coord.getY() - coord.getX())
+				coord.getX() + Math.min(7 - coord.getX(), 7 - coord.getY()),
+				coord.getY() + Math.min(7 - coord.getX(), 7 - coord.getY())
 			)
 		));
 
+		// Top left
 		result.addAll(legalCoords(
 			new Coord(
-				coord.getX() + (7 - coord.getX()),
-				coord.getY() + (7 - coord.getY())
+				coord.getX() - Math.min(coord.getX(), coord.getY()),
+				coord.getY() - Math.min(coord.getX(), coord.getY())
 			)
 		));
 
+		// Bottom left
 		result.addAll(legalCoords(
 			new Coord(
-				Math.max(0, coord.getX() - coord.getY()),
-				coord.getY() + (7 - coord.getY())
+				coord.getX() - Math.max(7 - coord.getX(), 7 - coord.getY()),
+				coord.getY() + Math.max(7 - coord.getX(), 7 - coord.getY())
 			)
 		));
 
+		// Top right
 		result.addAll(legalCoords(
 			new Coord(
-				coord.getX() + (7 - coord.getX()),
-				Math.max(0, coord.getY() - coord.getX())
+				coord.getX() + Math.max(7 - coord.getX(), 7 - coord.getY()),
+				coord.getY() - Math.max(7 - coord.getX(), 7 - coord.getY())
 			)
 		));
 
 		return result;
-
 	}
 }
 

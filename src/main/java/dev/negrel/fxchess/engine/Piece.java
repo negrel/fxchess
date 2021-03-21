@@ -46,38 +46,12 @@ public abstract class Piece implements Movable, Serializable {
 	protected List<Coord> legalCoords(@NotNull Coord to) {
 		List<Coord> result = new ArrayList<>();
 
-		int diffX = coord.getX() - to.getX();
-		int incX = diffX > 0 ? 1 : -1;
-
-		int diffY = coord.getY() - to.getY();
-		int incY = diffY > 0 ? 1 : -1;
-
 		boolean ok = false;
 
-		if (diffX == 0 && diffY != 0) {
-			for (int i = to.getY(); i != coord.getY(); i += incY) {
-				Coord c = new Coord(coord.getX(), i);
-				if (ok || isLegalMove(c)) {
-					result.add(c);
-					ok = true;
-				}
-			}
-		} else if (diffY == 0 && diffX != 0) {
-			for (int i = to.getX(); i != coord.getX(); i += incX) {
-				Coord c = new Coord(i, coord.getY());
-				if (ok || isLegalMove(c)) {
-					result.add(c);
-					ok = true;
-				}
-			}
-		} else if (diffX == diffY) {
-			for (int i = -diffX; i != 0; i += incX) {
-				Coord c = new Coord(coord.getX() + i, coord.getY() + (i * -incY));
-				boolean isLegal = isLegalMove(c);
-				if (ok || isLegal) {
-					result.add(c);
-					ok = true;
-				}
+		for (Coord c : Coord.getCoordsBetween(to, this.coord)) {
+			if (ok || isLegalMove(c)) {
+				result.add(c);
+				ok = true;
 			}
 		}
 

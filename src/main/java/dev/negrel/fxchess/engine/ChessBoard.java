@@ -6,7 +6,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.Vector;
 
@@ -71,10 +70,10 @@ public class ChessBoard implements Serializable {
 		for (int i = 0; i < 2; i++) {
 			int y = pawnY[i];
 			Color c = i == 1 ? Color.BLACK : Color.WHITE;
-			for (int j = 0; j < 8; j++) {
-				Coord pos = new Coord(j, y);
-				new Pawn(this, pos, c);
-			}
+			//			for (int j = 0; j < 8; j++) {
+			//				Coord pos = new Coord(j, y);
+			//				new Pawn(this, pos, c);
+			//			}
 		}
 
 		for (int i = 0; i < 2; i++) {
@@ -93,27 +92,17 @@ public class ChessBoard implements Serializable {
 		}
 	}
 
-	public Iterator<Case> getIterator(@NotNull Coord from, @NotNull Coord to) throws IllegalPositionException {
-		int diffX = Math.abs(to.getX() - from.getX());
-		int diffY = Math.abs(to.getY() - from.getY());
+	public ArrayList<Case> getCases(@NotNull Coord from, @NotNull Coord to) {
+		ArrayList<Case> l = new ArrayList<>();
 
-		if (diffX == 0 && diffY == 0)
-			return Collections.emptyIterator();
-
-		// Only diagonal, horizontal and vertical line are allowed
-		if (!(diffX == diffY || (diffX > 0 && diffY == 0) || (diffY > 0 && diffX == 0)))
-			return null;
-
-		// Collect the Movable.
-		ArrayList<Case> l = new ArrayList<Case>();
-		for (int i = from.getX(); i < to.getX(); i++) {
-			for (int j = from.getY(); j < to.getY(); j++) {
-				Case c = getCase(new Coord(i, j));
-				l.add(c);
+		for (Coord c : Coord.getCoordsBetween(from, to)) {
+			try {
+				l.add(getCase(c));
+			} catch (IllegalPositionException ignored) {
 			}
 		}
 
-		return l.iterator();
+		return l;
 	}
 
 	private void checkCoord(@NotNull Coord coord) throws IllegalPositionException {
@@ -138,12 +127,11 @@ public class ChessBoard implements Serializable {
 		if (from.equals(to))
 			return false;
 
-		Iterator<Case> it;
-		try {
-			it = getIterator(from, to);
-		} catch (IllegalPositionException ignored) {
+		ArrayList<Case> l = getCases(from, to);
+		Iterator<Case> it = l.iterator();
+
+		if (l.size() < 1)
 			return false;
-		}
 
 		// Skip the first case.
 		Case c = it.hasNext() ? it.next() : null;

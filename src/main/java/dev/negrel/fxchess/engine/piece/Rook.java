@@ -42,7 +42,7 @@ public class Rook extends Piece {
 		);
 
 		result.addAll(
-			legalCoords(new Coord(8, coord.getY()))
+			legalCoords(new Coord(7, coord.getY()))
 		);
 
 		// Vertical check
@@ -51,9 +51,8 @@ public class Rook extends Piece {
 		);
 
 		result.addAll(
-			legalCoords(new Coord(coord.getX(), 8))
+			legalCoords(new Coord(coord.getX(), 7))
 		);
-
 		return result;
 	}
 }
