@@ -22,6 +22,7 @@ public class Main extends Application {
 	Game game = new Game();
 	Coord pressedCoord;
 	private State state = State.PICK;
+	private Coord checkCoord = null;
 
 	public static void main(String[] args) {
 		launch(args);
@@ -63,7 +64,6 @@ public class Main extends Application {
 					p = (Piece) game.board.getMovable(pressedCoord);
 				} catch (IllegalPositionException ignored) {
 				}
-
 				if (p != null && p.color.equals(game.getPlayer()))
 					state = State.MOVE;
 				else
@@ -73,10 +73,27 @@ public class Main extends Application {
 				Coord releasedCoord = canvas.adaptCoord(event.getX(), event.getY());
 				try {
 					game.playMove(new Move(pressedCoord, releasedCoord));
+					if (pressedCoord.equals(checkCoord)) {
+						checkCoord = null;
+					} else if (releasedCoord.equals(checkCoord)) {
+						state = State.END_GAME;
+						drawChessBoard();
+						return;
+					}
+
 				} catch (Exception ignored) {
 				}
 
-				pressedCoord = null;
+				if (game.isCheck()) {
+					checkCoord = game.getPlayerKing().getCoord();
+					if (game.isCheckMate())
+						state = State.END_GAME;
+				}
+				state = State.PICK;
+			}
+			case END_GAME -> {
+				canvas = new ChessBoard(game.board, loadAssets());
+				this.checkCoord = null;
 				state = State.PICK;
 			}
 		}
@@ -86,10 +103,14 @@ public class Main extends Application {
 
 	private void drawChessBoard() {
 		canvas.drawChessBoard();
+		if (checkCoord != null) {
+			canvas.drawCaseAt(checkCoord, Color.ORANGERED);
+		}
 
 		switch (state) {
 			case PICK:
 				break;
+
 			case MOVE:
 				Piece p = null;
 				try {
@@ -111,9 +132,10 @@ public class Main extends Application {
 				}
 				break;
 
-			case CHECK:
-				break;
-			case CHECK_MATE:
+			case END_GAME:
+				assert checkCoord != null;
+				canvas.drawCaseAt(checkCoord, Color.RED);
+
 				break;
 
 			default:
@@ -144,7 +166,6 @@ public class Main extends Application {
 	private enum State {
 		PICK,
 		MOVE,
-		CHECK,
-		CHECK_MATE,
+		END_GAME,
 	}
 }

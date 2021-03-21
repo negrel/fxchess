@@ -138,7 +138,7 @@ public class ChessBoard implements Serializable {
 		while (it.hasNext()) {
 			c = it.next();
 
-			if (it.hasNext() && c.isOccupied())
+			if (c.isOccupied())
 				return false;
 		}
 

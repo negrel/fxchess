@@ -2,6 +2,7 @@ package dev.negrel.fxchess.engine;
 
 import dev.negrel.fxchess.engine.board_exception.IllegalMoveException;
 import dev.negrel.fxchess.engine.board_exception.IllegalPositionException;
+import dev.negrel.fxchess.engine.piece.King;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -112,71 +113,65 @@ public class Game implements Serializable {
 		this.board.smartPrint();
 	}
 
-	//	public boolean isCheck() {
-	//		ArrayList<Piece> playerPieces = new ArrayList<>();
-	//		King otherPlayerKing = null;
-	//
-	//		for (Case[] row : board.getCases()) {
-	//			for (Case c : row) {
-	//				if (!c.isOccupied())
-	//					continue;
-	//
-	//				Piece piece = (Piece) c.getMovable();
-	//				if (piece.color.equals(player))
-	//					playerPieces.add(piece);
-	//				else if (piece instanceof King)
-	//					otherPlayerKing = (King) piece;
-	//			}
-	//		}
-	//		assert otherPlayerKing != null;
-	//
-	//		for (Piece piece : playerPieces) {
-	//			if (piece.canMove(otherPlayerKing.getCoord()))
-	//				return true;
-	//		}
-	//
-	//		return false;
-	//	}
-	//
-	//	public boolean isCheckMate() {
-	//		ArrayList<Piece> playerPieces = new ArrayList<>();
-	//		King otherPlayerKing = null;
-	//
-	//		for (Case[] row : board.getCases()) {
-	//			for (Case c : row) {
-	//				if (!c.isOccupied())
-	//					continue;
-	//
-	//				Piece piece = (Piece) c.getMovable();
-	//				if (piece.color.equals(player))
-	//					playerPieces.add(piece);
-	//				else if (piece instanceof King)
-	//					otherPlayerKing = (King) piece;
-	//			}
-	//		}
-	//
-	//		assert otherPlayerKing != null;
-	//		ArrayList<Coord> otherPlayerKingPossibleMove = new ArrayList<>();
-	//		for (int i = -1; i < 2; i++) {
-	//			int x = otherPlayerKing.getCoord().getX();
-	//			for (int j = -1; j < 2; j++) {
-	//				int y = otherPlayerKing.getCoord().getY();
-	//				Coord c = new Coord(x, y);
-	//
-	//				if (c.equals(otherPlayerKing.getCoord()))
-	//					continue;
-	//
-	//				otherPlayerKingPossibleMove.add(c);
-	//			}
-	//		}
-	//
-	//		for (Coord possibleMove : otherPlayerKingPossibleMove) {
-	//			for (Piece piece : playerPieces) {
-	//				if (piece.canMove(possibleMove))
-	//					return true;
-	//			}
-	//		}
-	//
-	//		return false;
-	//	}
+	public boolean isCheck() {
+		ArrayList<Piece> playerPieces = getPieces();
+		King otherPlayerKing = (King) playerPieces.stream()
+			.filter(p -> p.color.equals(player) && p instanceof King).findFirst().get();
+
+		for (Piece piece : playerPieces) {
+			if (piece.isLegalMove(otherPlayerKing.getCoord()))
+				return true;
+		}
+
+		return false;
+	}
+
+	public King getPlayerKing() {
+		ArrayList<Piece> playerPieces = getPieces();
+		return (King) playerPieces.stream()
+			.filter(p -> p.color.equals(player) && p instanceof King).findFirst().get();
+	}
+
+
+	private ArrayList<Piece> getPieces() {
+		ArrayList<Piece> playersPieces = new ArrayList<>();
+
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				Piece piece = null;
+				try {
+					piece = (Piece) board.getMovable(new Coord(j, i));
+				} catch (IllegalPositionException ignored) {
+				}
+				if (piece == null)
+					continue;
+
+				playersPieces.add(piece);
+			}
+		}
+
+		return playersPieces;
+	}
+
+	public boolean isCheckMate() {
+		ArrayList<Piece> playerPieces = getPieces();
+		King otherPlayerKing = (King) playerPieces.stream()
+			.filter(p -> !p.color.equals(player) && p instanceof King).findFirst().get();
+
+		for (Coord move : otherPlayerKing.legalMove()) {
+			boolean canMove = true;
+
+			for (Piece piece : playerPieces) {
+				if (piece.isLegalMove(move)) {
+					canMove = false;
+					break;
+				}
+			}
+
+			if (canMove)
+				return false;
+		}
+
+		return false;
+	}
 }

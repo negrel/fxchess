@@ -65,10 +65,7 @@ public abstract class Piece implements Movable, Serializable {
 	 * @return true if this Piece can move to the destination.
 	 */
 	public boolean isLegalMove(@NotNull Coord destination) {
-		boolean isValid = isValidMove(destination);
-		boolean isLegalDst = isLegalDestination(destination);
-		boolean isLegalPath = board.isLegalPath(this.coord, destination);
-		return isValid && isLegalDst && isLegalPath;
+		return isValidMove(destination) && isLegalDestination(destination) && board.isLegalPath(this.coord, destination);
 	}
 
 	/**
